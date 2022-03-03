@@ -1,9 +1,15 @@
 #include <iostream>
+#include "../inc/CommsProtocol.hpp"
 
 int main() {
 
-  std::cout << "Hello World" << '\n';
+  CommsProtocol * teste = new CommsProtocol();
 
-  return 0;
+  if ( teste->solicitarTemperaturaInterna() ) {
+    return EXIT_FAILURE;
+  }
 
+  delete(teste);
+
+  return EXIT_SUCCESS;
 }

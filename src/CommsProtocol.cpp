@@ -90,10 +90,10 @@ bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
         return EXIT_FAILURE;
     }
 
-    for( unsigned char aids: palavraDeEnvio) {
-        if( aids == '\0') break;
-        printf("%X \n", aids);
-    }
+    // for( unsigned char letra: palavraDeEnvio) {
+    //     if( letra == '\0') break;
+    //     printf("%X \n", letra);
+    // }
 
     int contador = write( get_uart0_filestream(), &(this->palavraDeEnvio), numeroCaracteres);
 

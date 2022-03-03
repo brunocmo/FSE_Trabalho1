@@ -8,7 +8,7 @@ SRCFOLDER := src/
 OBJFOLDER := obj/
 CC := g++
 CPPFLAGS := -W -Wall -ansi -std=c++11 -pedantic -ggdb
-CFLAGS := -W -Wall -ggdb -std=c++11 -ansi -x
+CFLAGS := -W -Wall -ggdb -x
 
 SRCFILES := $(wildcard src/*.cpp)
 all: $(SRCFILES:src/%.cpp=obj/%.o obj/bme280.o obj/ShowInfoLCD.o)

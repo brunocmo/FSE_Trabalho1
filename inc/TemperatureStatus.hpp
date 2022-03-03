@@ -33,4 +33,22 @@ int8_t user_i2c_write(uint8_t reg_addr, const uint8_t *data, uint32_t len, void 
 /* Function reads temperature, humidity and pressure data in forced mode. */
 int8_t stream_sensor_data_forced_mode(struct bme280_dev *dev);
 
+class TemperatureStatus {
+
+private:
+    double temperatura;
+
+public: 
+    TemperatureStatus();
+    ~TemperatureStatus();
+
+    bool init();
+
+    double get_temperatura();
+    int8_t set_temperature( struct bme280_dev *dev);
+
+};
+
+
+
 #endif

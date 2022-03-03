@@ -23,6 +23,7 @@ class CommsProtocol {
         char subCodigo;
         char matricula[4];
         unsigned char palavraDeEnvio[255];
+        float temperaturaInterna;
 
     public:
 
@@ -69,6 +70,9 @@ class CommsProtocol {
 
         char* get_matricula();
         void set_matricula( char *matricula );
+
+        float get_temperaturaInterna();
+        void set_temperaturaInterna( float temperaturaInterna );
 };
 
 

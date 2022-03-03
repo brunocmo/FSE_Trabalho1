@@ -160,7 +160,8 @@ bool CommsProtocol::receberInformacao(int flag) {
 
                 case 2 : 
                     std::memcpy(&valorPontoFlut, &rx_buffer[3], sizeof(int));
-                    printf("Mensagem de comprimento %d: %f\n", rx_length, valorPontoFlut);
+                    set_temperaturaInterna(valorPontoFlut);
+                    // printf("Mensagem de comprimento %d: %f\n", rx_length, valorPontoFlut);
                     break;
 
                 default:
@@ -221,6 +222,13 @@ void CommsProtocol::set_matricula( char *matricula ) {
     std::strcpy( this->matricula, matricula );
 }
 
+float CommsProtocol::get_temperaturaInterna() {
+    return this->temperaturaInterna;
+}
+
+void CommsProtocol::set_temperaturaInterna( float temperaturaInterna ) {
+    this->temperaturaInterna = temperaturaInterna;
+}
 
 
 

@@ -1,5 +1,5 @@
-#ifndef COMMS_HPP
-#define COMMS_HPP
+#ifndef COMMSPROTOCOL_HPP
+#define COMMSPROTOCOL_HPP
 
 #include <cstring>
 #include <stdio.h>

@@ -8,9 +8,8 @@ int main() {
   CommsProtocol * teste = new CommsProtocol();
 
 
-  if ( teste->solicitarTemperaturaInterna() ) {
-    return EXIT_FAILURE;
-  }
+  teste->solicitarTemperaturaInterna();
+  teste->solicitarTemperaturaPotenciometro();
 
   printf("A temperatura ambiente   eh: %.4lf\n", statusTemperatura->get_temperatura());
   printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());

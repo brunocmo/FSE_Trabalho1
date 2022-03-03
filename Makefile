@@ -7,7 +7,7 @@ SRCFOLDER := src/
 # .o
 OBJFOLDER := obj/
 CC := g++
-CPPFLAGS := -W -Wall -ansi -std=c++11 -pedantic -ggdb 
+CPPFLAGS := -W -Wall -ansi -std=c++11 -lwiringPi -pedantic -ggdb 
 CFLAGS := -W -Wall -ggdb -lwiringPi -x
 
 SRCFILES := $(wildcard src/*.cpp)

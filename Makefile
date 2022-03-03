@@ -25,10 +25,6 @@ obj/bme280.o: src/bme280.c
 	@ echo 'Construindo target usando GCC compiler: $<'
 	$(CC) $(CFLAGS) c -c $< -o $@ -I./inc
 	@ echo ' '
-obj/ShowInfoLCD.o: src/ShowInfoLCD.c
-	@ echo 'Construindo target usando GCC compiler: $<'
-	$(CC) $(CFLAGS) c -c $< -o $@ -I./inc
-	@ echo ' '
 
 run: bin/prog
 	bin/prog

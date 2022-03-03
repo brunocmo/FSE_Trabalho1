@@ -20,9 +20,18 @@ int main() {
 	printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());
 	printf("A temperatura interna    eh: %.4lf\n", teste->get_temperaturaInterna());
 
-	mostrarMensagem( tempAmbiente, typeFloat( (float)statusTemperatura->get_temperatura() ));
-	mostrarMensagem( tempReferencia, typeFloat( teste->get_temperaturaReferencia() ));
-	mostrarMensagem( tempInterna, typeFloat( teste->get_temperaturaInterna() ));
+	lcd->set_mensagemAcima16(tempAmbiente);
+	lcd->typeFloat( (float)(statusTemperatura->get_temperatura()) );
+
+	sleep(1); 
+
+	lcd->set_mensagemAcima16(tempReferencia);
+	lcd->typeFloat( teste->get_temperaturaReferencia() );
+
+	sleep(1); 
+
+	lcd->set_mensagemAcima16(tempInterna);
+	lcd->typeFloat( teste->get_temperaturaInterna());
 
 	// sleep(2);
 

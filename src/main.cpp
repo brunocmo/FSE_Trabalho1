@@ -5,6 +5,7 @@
 
 int main() {
 
+	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * statusTemperatura = new TemperatureStatus();
 	CommsProtocol * teste = new CommsProtocol();
 

@@ -1,6 +1,6 @@
 #include "../inc/ShowInfoLCD.h"
 
-void mostrarMensagem( char* mensagemAcima, char* mensagemAcima) {
+void mostrarMensagem( char* mensagemAcima, char* mensagemAbaixo) {
     if (wiringPiSetup() == -1) exit (1);
     fd = wiringPiI2CSetup(I2C_ADDR);
 
@@ -11,7 +11,7 @@ void mostrarMensagem( char* mensagemAcima, char* mensagemAcima) {
     lcdLoc(LINE1);
     typeln(mensagemAcima);
     lcdLoc(LINE2);
-    typeln(mensagemAcima);
+    typeln(mensagemAbaixo);
 }
 
 // float to string

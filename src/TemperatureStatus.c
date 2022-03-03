@@ -113,28 +113,25 @@ int8_t stream_sensor_data_forced_mode(struct bme280_dev *dev)
     req_delay = bme280_cal_meas_delay(&dev->settings);
     printf("Req. Delay %d\n", req_delay);
 
-    /* Continuously stream sensor data */
-    while (1)
+    /* Set the sensor to forced mode */
+    rslt = bme280_set_sensor_mode(BME280_FORCED_MODE, dev);
+    if (rslt != BME280_OK)
     {
-        /* Set the sensor to forced mode */
-        rslt = bme280_set_sensor_mode(BME280_FORCED_MODE, dev);
-        if (rslt != BME280_OK)
-        {
-            fprintf(stderr, "Failed to set sensor mode (code %+d).", rslt);
-            break;
-        }
+        fprintf(stderr, "Failed to set sensor mode (code %+d).", rslt);
 
-        /* Wait for the measurement to complete and print data */
-        dev->delay_us(req_delay, dev->intf_ptr);
-        rslt = bme280_get_sensor_data(BME280_ALL, &comp_data, dev);
-        if (rslt != BME280_OK)
-        {
-            fprintf(stderr, "Failed to get sensor data (code %+d).", rslt);
-            break;
-        }
-
-        print_sensor_data(&comp_data);
     }
+
+    /* Wait for the measurement to complete and print data */
+    dev->delay_us(req_delay, dev->intf_ptr);
+    rslt = bme280_get_sensor_data(BME280_ALL, &comp_data, dev);
+    if (rslt != BME280_OK)
+    {
+        fprintf(stderr, "Failed to get sensor data (code %+d).", rslt);
+
+    }
+
+    print_sensor_data(&comp_data);
+
 
     return rslt;
 }

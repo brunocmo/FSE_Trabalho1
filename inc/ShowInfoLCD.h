@@ -57,8 +57,6 @@ void typeChar(char val);
 
 void mostrarMensagem( char* mensagemAcima, char* mensagemAbaixo );
 
-
- 
 #ifdef __cplusplus
 }
 #endif

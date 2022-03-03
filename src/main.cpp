@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../inc/CommsProtocol.hpp"
 #include "../inc/TemperatureStatus.hpp"
-#include "../inc/ShowInfoLCD.h"
+#include "../inc/ShowInfoLCD.hpp"
 
 int main() {
 

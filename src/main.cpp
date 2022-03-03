@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../inc/CommsProtocol.hpp"
-#include "../inc/TemperatureStatus.h"
+#include "../inc/TemperatureStatus.hpp"
 
 int main() {
 

@@ -1,4 +1,4 @@
-#include "../inc/TemperatureStatus.h"
+#include "../inc/TemperatureStatus.hpp"
 
 /*!
  * @brief This function reading the sensor's registers through I2C bus.
@@ -34,7 +34,7 @@ int8_t user_i2c_write(uint8_t reg_addr, const uint8_t *data, uint32_t len, void 
 
     id = *((struct identifier *)intf_ptr);
 
-    buf = malloc(len + 1);
+    buf = (unsigned char*) malloc(len + 1);
     buf[0] = reg_addr;
     memcpy(buf + 1, data, len);
     if (write(id.fd, buf, len + 1) < (uint16_t)len)

@@ -1,5 +1,5 @@
-#ifndef TEMPERATURESTATUS_H
-#define TEMPERATURESTATUS_H
+#ifndef TEMPERATURESTATUS_HPP
+#define TEMPERATURESTATUS_HPP
 
 #ifdef __cplusplus
 extern "C" {

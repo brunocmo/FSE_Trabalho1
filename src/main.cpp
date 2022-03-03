@@ -9,9 +9,13 @@ int main() {
     return EXIT_FAILURE;
   }
 
+  sleep(2);
+
   if ( teste->solicitarTemperaturaPotenciometro() ) {
     return EXIT_FAILURE;
   }
+
+  sleep(2);
 
   if ( teste->lerComandosDoUsuario() ) {
     return EXIT_FAILURE;

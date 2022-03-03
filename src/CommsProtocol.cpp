@@ -44,7 +44,6 @@ bool CommsProtocol::solicitar(int flag) {
     }    
     
     set_codigoFuncao((char)0x23);
-    set_subCodigo((char)0xC1);
 
     unsigned char insercaoCRC[7] {
         (unsigned char)get_enderecoDispositivo(),

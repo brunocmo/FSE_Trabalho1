@@ -16,8 +16,8 @@
 #ifndef SHOWINFOLCD_HPP
 #define SHOWINFOLCD_HPP
 
-// #include <wiringPiI2C.h>
-// #include <wiringPi.h>
+#include <wiringPiI2C.h>
+#include <wiringPi.h>
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>

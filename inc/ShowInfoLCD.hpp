@@ -61,7 +61,7 @@ class ShowInfoLCD {
         void typeChar(char val);
         int fd;  // seen by all subroutines
 
-        void mostratMensagem();
+        void mostrarMensagem();
 
         char *get_mensagemAcima16();
         void set_mensagemAcima16( char *mensagem );

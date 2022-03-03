@@ -8,7 +8,7 @@ ShowInfoLCD::ShowInfoLCD() {
 
 ShowInfoLCD::~ShowInfoLCD() {}
 
-void ShowInfoLCD::mostratMensagem() {
+void ShowInfoLCD::mostrarMensagem() {
     if (wiringPiSetup() == -1) exit (1);
 
     //printf("fd = %d ", fd);

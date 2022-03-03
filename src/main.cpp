@@ -24,15 +24,21 @@ int main() {
 	lcd->set_mensagemAcima16(tempAmbiente);
 	lcd->typeFloat( (float)(statusTemperatura->get_temperatura()) );
 
+	lcd->mostrarMensagem();
+
 	sleep(1); 
 
 	lcd->set_mensagemAcima16(tempReferencia);
 	lcd->typeFloat( teste->get_temperaturaReferencia() );
 
+	lcd->mostrarMensagem();
+
 	sleep(1); 
 
 	lcd->set_mensagemAcima16(tempInterna);
 	lcd->typeFloat( teste->get_temperaturaInterna());
+
+	lcd->mostrarMensagem();
 
 	// sleep(2);
 

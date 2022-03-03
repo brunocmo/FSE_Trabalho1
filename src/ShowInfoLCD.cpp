@@ -3,14 +3,13 @@
 ShowInfoLCD::ShowInfoLCD() {
     std::strcpy( mensagemAcima16, "                " );
     std::strcpy( mensagemAbaixo16, "                " );
+    fd = wiringPiI2CSetup(I2C_ADDR);
 }
 
 ShowInfoLCD::~ShowInfoLCD() {}
 
 void ShowInfoLCD::mostratMensagem() {
     if (wiringPiSetup () == -1) exit (1);
-
-    fd = wiringPiI2CSetup(I2C_ADDR);
 
     //printf("fd = %d ", fd);
 
@@ -79,7 +78,7 @@ void ShowInfoLCD::lcd_byte(int bits, int mode)   {
   lcd_toggle_enable(bits_low);
 }
 
-void lcd_toggle_enable(int bits)   {
+void ShowInfoLCD::lcd_toggle_enable(int bits)   {
   // Toggle enable pin on LCD display
   delayMicroseconds(500);
   wiringPiI2CReadReg8(fd, (bits | ENABLE));

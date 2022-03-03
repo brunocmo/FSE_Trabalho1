@@ -35,42 +35,43 @@
 #define LCD_BACKLIGHT   0x08  // On
 // LCD_BACKLIGHT = 0x00  # Off
 
-#define ENABLE  0b00000100 // Enable bit
+#define ENABLE  0x04 // Enable bit
 
 class ShowInfoLCD {
 
-private:
-    char mensagemAcima16[16];
-    char mensagemAbaixo16[16];
+    private:
+        char mensagemAcima16[16];
+        char mensagemAbaixo16[16];
+        int fd;  // seen by all subroutines
 
-public:
+    public:
 
-    ShowInfoLCD();
-    ~ShowInfoLCD();
+        ShowInfoLCD();
+        ~ShowInfoLCD();
 
-    void lcd_init(void);
-    void lcd_byte(int bits, int mode);
-    void lcd_toggle_enable(int bits);
+        void lcd_init(void);
+        void lcd_byte(int bits, int mode);
+        void lcd_toggle_enable(int bits);
 
-    // added by Lewis
-    void typeInt(int i);
-    void typeFloat(float myFloat);
-    void lcdLoc(int line); //move cursor
-    void ClrLcd(void); // clr LCD return home
-    void typeln(const char *s);
-    void typeChar(char val);
-    int fd;  // seen by all subroutines
-
-    void mostratMensagem();
-
-    char *get_mensagemAcima16();
-    void set_mensagemAcima16( char *mensagem );
-
-    char *get_mensagemAbaixo16();
-    void set_mensagemAbaixo16( char *mensagem );
+        // added by Lewis
+        void typeInt(int i);
+        void typeFloat(float myFloat);
+        void lcdLoc(int line); //move cursor
+        void ClrLcd(void); // clr LCD return home
+        void typeln(const char *s);
+        void typeChar(char val);
 
 
-}
+        void mostratMensagem();
+
+        char *get_mensagemAcima16();
+        void set_mensagemAcima16( char *mensagem );
+
+        char *get_mensagemAbaixo16();
+        void set_mensagemAbaixo16( char *mensagem );
+
+
+};
  
 
 #endif

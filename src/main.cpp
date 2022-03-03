@@ -1,34 +1,53 @@
 #include <iostream>
 #include "../inc/CommsProtocol.hpp"
 #include "../inc/TemperatureStatus.hpp"
+#include "../inc/ShowInfoLCD.hpp"
 
 int main() {
 
-  TemperatureStatus * statusTemperatura = new TemperatureStatus();
-  CommsProtocol * teste = new CommsProtocol();
+	TemperatureStatus * statusTemperatura = new TemperatureStatus();
+	CommsProtocol * teste = new CommsProtocol();
+	ShowInfoLCD * lcd = new ShowInfoLCD();
+
+	char tempAmbiente[16] = "Temp. Ambiente:";
+	char tempReferencia[16] = "Temp. Pot.:";
+	char tempInterna[16] = "Temp. Interna.:";
 
 
-  teste->solicitarTemperaturaInterna();
-  teste->solicitarTemperaturaPotenciometro();
+	teste->solicitarTemperaturaInterna();
+	teste->solicitarTemperaturaPotenciometro();
 
-  printf("A temperatura ambiente   eh: %.4lf\n", statusTemperatura->get_temperatura());
-  printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());
-  printf("A temperatura interna    eh: %.4lf\n", teste->get_temperaturaInterna());
+	printf("A temperatura ambiente   eh: %.4lf\n", statusTemperatura->get_temperatura());
+	printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());
+	printf("A temperatura interna    eh: %.4lf\n", teste->get_temperaturaInterna());
 
-  // sleep(2);
+	lcd->set_mensagemAcima16(tempAmbiente);
+	lcd->typeFloat( (float)(statusTemperatura->get_temperatura()) );
 
-  // if ( teste->solicitarTemperaturaPotenciometro() ) {
-  //   return EXIT_FAILURE;
-  // }
+	sleep(1); 
 
-  // sleep(2);
+	lcd->set_mensagemAcima16(tempReferencia);
+	lcd->typeFloat( teste->get_temperaturaReferencia() );
 
-  // if ( teste->lerComandosDoUsuario() ) {
-  //   return EXIT_FAILURE;
-  // }
+	sleep(1); 
 
-  delete(statusTemperatura);
-  delete(teste);
+	lcd->set_mensagemAcima16(tempInterna);
+	lcd->typeFloat( teste->get_temperaturaInterna());
 
-  return EXIT_SUCCESS;
+	// sleep(2);
+
+	// if ( teste->solicitarTemperaturaPotenciometro() ) {
+	//   return EXIT_FAILURE;
+	// }
+
+	// sleep(2);
+
+	// if ( teste->lerComandosDoUsuario() ) {
+	//   return EXIT_FAILURE;
+	// }
+
+	delete(statusTemperatura);
+	delete(teste);
+
+	return EXIT_SUCCESS;
 }

@@ -90,12 +90,12 @@ int8_t TemperatureStatus::set_temperature( struct bme280_dev *dev) {
         return rslt;
     }
 
-    printf("Temperature, Pressure, Humidity\n");
+    // printf("Temperature, Pressure, Humidity\n");
 
     /*Calculate the minimum delay required between consecutive measurement based upon the sensor enabled
      *  and the oversampling configuration. */
     req_delay = bme280_cal_meas_delay(&dev->settings);
-    printf("Req. Delay %d\n", req_delay);
+    // printf("Req. Delay %d\n", req_delay);
 
     /* Set the sensor to forced mode */
     rslt = bme280_set_sensor_mode(BME280_FORCED_MODE, dev);

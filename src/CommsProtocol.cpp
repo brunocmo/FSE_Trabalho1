@@ -30,7 +30,7 @@ bool CommsProtocol::init() {
     tcflush(uart0_filestream, TCIFLUSH);
     tcsetattr(uart0_filestream, TCSANOW, &options);
 
-    printf("Abertura e configuração realizadas!\n");
+    // printf("Abertura e configuração realizadas!\n");
     return EXIT_SUCCESS;
 }
 

@@ -34,7 +34,15 @@ bool CommsProtocol::init() {
     return EXIT_SUCCESS;
 }
 
-bool CommsProtocol::solicitarTemperaturaInterna() {
+bool CommsProtocol::solicitar(int flag) {
+    
+    switch( flag ) {
+        case 1 : set_subCodigo((char)0xC1); break;
+        case 2 : set_subCodigo((char)0xC2); break;
+        case 3 : set_subCodigo((char)0xC3); break;
+        default: return EXIT_FAILURE;
+    }    
+    
     set_codigoFuncao((char)0x23);
     set_subCodigo((char)0xC1);
 
@@ -63,6 +71,18 @@ bool CommsProtocol::solicitarTemperaturaInterna() {
     enviarInformacao(9);
 
     return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::solicitarTemperaturaInterna() {
+    return solicitar(1);
+}
+
+bool CommsProtocol::solicitarTemperaturaPotenciometro() {
+    return solicitar(2);
+}
+
+bool CommsProtocol::lerComandosDoUsuario() {
+    return solicitar(3);
 }
 
 bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
@@ -109,8 +129,6 @@ bool CommsProtocol::receberInformacao(int flag) {
     unsigned char rx_buffer[100];
 
     if(get_uart0_filestream() != -1) {
-
-        printf("meu cu");
 
         rx_length = read(get_uart0_filestream(), (void*)rx_buffer, 100);
         if(rx_length < 0){

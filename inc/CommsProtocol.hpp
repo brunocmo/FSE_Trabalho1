@@ -31,7 +31,10 @@ class CommsProtocol {
 
         bool init();
 
+        bool solicitar(int flag);
         bool solicitarTemperaturaInterna();
+        bool solicitarTemperaturaPotenciometro();
+        bool lerComandosDoUsuario();
 
         bool enviarInformacao(int numeroCaracteres);
         bool receberInformacao(int flag);

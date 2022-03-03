@@ -12,8 +12,9 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  printf("A temperatura ambiente eh: %.4lf\n", statusTemperatura->get_temperatura());
-  printf("A temperatura interna  eh: %.4lf\n", teste->get_temperaturaInterna());
+  printf("A temperatura ambiente   eh: %.4lf\n", statusTemperatura->get_temperatura());
+  printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());
+  printf("A temperatura interna    eh: %.4lf\n", teste->get_temperaturaInterna());
 
   // sleep(2);
 
@@ -26,8 +27,6 @@ int main() {
   // if ( teste->lerComandosDoUsuario() ) {
   //   return EXIT_FAILURE;
   // }
-
-
 
   delete(statusTemperatura);
   delete(teste);

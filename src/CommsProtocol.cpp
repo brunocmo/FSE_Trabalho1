@@ -103,20 +103,12 @@ bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
 
     sleep(1);
 
-    if (this->palavraDeEnvio[2] != 0xD1 || this->palavraDeEnvio[2] != 0xD2) {
-        if (this->palavraDeEnvio[2] == 0xC1 || this->palavraDeEnvio[2] == 0xC2 ) {
-            receberInformacao(2);
-        } else {
-            receberInformacao(1);
-        } 
-    } else {
-        close(get_uart0_filestream());
-    }
+    receberInformacao(palavraDeEnvio[2]);
 
     return EXIT_SUCCESS;
 }
 
-bool CommsProtocol::receberInformacao(int flag) {
+bool CommsProtocol::receberInformacao(unsigned char flag) {
     
     int valorInteiro{0};
     float valorPontoFlut{0.0f};
@@ -149,25 +141,22 @@ bool CommsProtocol::receberInformacao(int flag) {
             crc = calcula_CRC(&crcPreVerificador[0], (rx_length-2));
                     
             if( crcRecebido == crc ) {
-                switch (flag)
-                {
-                case 1 : 
 
+                if( (flag >> 4) == 0x0C ) {
+                    std::memcpy(&valorPontoFlut, &rx_buffer[3], sizeof(int));
+                    // printf("Mensagem de comprimento %d: %f\n", rx_length, valorPontoFlut);
+
+                    if( flag == (unsigned char)0xC1) {
+                        set_temperaturaInterna(valorPontoFlut);
+                    } else {
+                        set_temperaturaReferencia(valorPontoFlut);
+                    }
+
+                } else {
                     std::memcpy(&valorInteiro, &rx_buffer[3], sizeof(int));
 
                     printf("Mensagem de comprimento %d: %d\n", rx_length, valorInteiro);
-                    break;
-
-                case 2 : 
-                    std::memcpy(&valorPontoFlut, &rx_buffer[3], sizeof(int));
-                    set_temperaturaInterna(valorPontoFlut);
-                    // printf("Mensagem de comprimento %d: %f\n", rx_length, valorPontoFlut);
-                    break;
-
-                default:
-                    break;
                 }
-
 
             } else {
                 printf("CRC falhou na verificao");
@@ -230,5 +219,10 @@ void CommsProtocol::set_temperaturaInterna( float temperaturaInterna ) {
     this->temperaturaInterna = temperaturaInterna;
 }
 
+float CommsProtocol::get_temperaturaReferencia() {
+    return this->temperaturaReferencia;
+}
 
-
+void CommsProtocol::set_temperaturaReferencia( float temperaturaReferencia ) {
+    this->temperaturaReferencia = temperaturaReferencia;
+}

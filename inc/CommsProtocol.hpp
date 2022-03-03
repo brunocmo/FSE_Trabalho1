@@ -24,6 +24,7 @@ class CommsProtocol {
         char matricula[4];
         unsigned char palavraDeEnvio[255];
         float temperaturaInterna;
+        float temperaturaReferencia;
 
     public:
 
@@ -38,7 +39,7 @@ class CommsProtocol {
         bool lerComandosDoUsuario();
 
         bool enviarInformacao(int numeroCaracteres);
-        bool receberInformacao(int flag);
+        bool receberInformacao(unsigned char flag);
 
         void pedidoInteiro();
         void pedidoReal();
@@ -54,7 +55,6 @@ class CommsProtocol {
 
         void enviar(std::string solicitacao);
         
-
         // Getters and Setters
         int get_uart0_filestream();
         void set_uart0_filestream( int uart0_filestream );
@@ -73,6 +73,9 @@ class CommsProtocol {
 
         float get_temperaturaInterna();
         void set_temperaturaInterna( float temperaturaInterna );
+
+        float get_temperaturaReferencia();
+        void set_temperaturaReferencia( float temperaturaReferencia );
 };
 
 

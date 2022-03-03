@@ -1,10 +1,6 @@
 #ifndef TEMPERATURESTATUS_HPP
 #define TEMPERATURESTATUS_HPP
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 
@@ -36,9 +32,5 @@ int8_t user_i2c_read(uint8_t reg_addr, uint8_t *data, uint32_t len, void *intf_p
 int8_t user_i2c_write(uint8_t reg_addr, const uint8_t *data, uint32_t len, void *intf_ptr);
 /* Function reads temperature, humidity and pressure data in forced mode. */
 int8_t stream_sensor_data_forced_mode(struct bme280_dev *dev);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

@@ -58,6 +58,8 @@ int main() {
 
 			controleDaTemperatura.mudarTemperatura(sinalControle);
 
+			printf("TempInt: %.2f -- TempPot: %.2f --", uart->get_temperaturaInterna(), uart->get_temperaturaReferencia());
+			printf("SinalControle: %d\n", sinalControle);
 		}
 		delay(1000);
 	}

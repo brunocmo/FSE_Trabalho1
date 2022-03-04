@@ -6,7 +6,7 @@ ControleTemperatura::ControleTemperatura() {
 
     printf("Criação do PWM 100 \n");
 
-    printf("Resultado: %d", softPwmCreate( 4, 0, 100);
+    printf("Resultado: %d", softPwmCreate( 4, 0, 100));
 
     sleep(10);
 

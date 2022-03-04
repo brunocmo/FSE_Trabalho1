@@ -37,14 +37,21 @@ bool CommsProtocol::init() {
 bool CommsProtocol::solicitar(int flag) {
     
     switch( flag ) {
-        case 1 : set_subCodigo((char)0xC1); break;
-        case 2 : set_subCodigo((char)0xC2); break;
-        case 3 : set_subCodigo((char)0xC3); break;
+        case 1 : 
+            set_codigoFuncao((char)0x23);  
+            set_subCodigo((char)0xC1); 
+            break;
+        case 2 : 
+            set_codigoFuncao((char)0x23);  
+            set_subCodigo((char)0xC2);   
+            break;
+        case 3 : 
+            set_codigoFuncao((char)0x23);  
+            set_subCodigo((char)0xC3); 
+            break;
         default: return EXIT_FAILURE;
     }    
     
-    set_codigoFuncao((char)0x23);
-
     unsigned char insercaoCRC[7] {
         (unsigned char)get_enderecoDispositivo(),
         (unsigned char)get_codigoFuncao(),
@@ -84,6 +91,124 @@ bool CommsProtocol::lerComandosDoUsuario() {
     return solicitar(3);
 }
 
+bool CommsProtocol::enviarSinal(int flag) {
+
+    unsigned char valorSinal[4];
+
+    switch( flag ) {
+        case 1 : 
+            set_codigoFuncao((char)0x16);  
+            set_subCodigo((char)0xD1); 
+            std::memcpy(valorSinal, &valorSinalControle, sizeof(int));
+            break;
+        case 2 : 
+            set_codigoFuncao((char)0x16);  
+            set_subCodigo((char)0xD2);
+            std::memcpy(valorSinal, &valorSinalReferencia, sizeof(int));  
+            break;
+        default: return EXIT_FAILURE;
+    }  
+  
+    unsigned char insercaoCRC[11] {
+        (unsigned char)get_enderecoDispositivo(),
+        (unsigned char)get_codigoFuncao(),
+        (unsigned char)get_subCodigo(),
+        (unsigned char)*(get_matricula()+0),
+        (unsigned char)*(get_matricula()+1),
+        (unsigned char)*(get_matricula()+2),
+        (unsigned char)*(get_matricula()+3),
+        valorSinal[0],
+        valorSinal[1],
+        valorSinal[2],
+        valorSinal[3]
+    };
+    short crcDeEnvio = calcula_CRC(&insercaoCRC[0], 11);
+    unsigned char crcEmChar[2];
+
+    std::memcpy(crcEmChar, &crcDeEnvio, sizeof(short));
+
+    for(int i{0}; i<11; i++) {
+        this->palavraDeEnvio[i] = insercaoCRC[i];
+    }
+
+    this->palavraDeEnvio[11] = crcEmChar[0];
+    this->palavraDeEnvio[12] = crcEmChar[1];
+    this->palavraDeEnvio[13] = '\0';
+
+    enviarInformacao(13);
+
+    return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::enviarSinalDeControle( int valorSinalControle ) {
+    this->valorSinalControle = valorSinalControle;
+    enviarSinal(1);
+
+    return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::enviarSinalDeReferencia( float valorSinalReferencia ) {
+    this->valorSinalReferencia = valorSinalReferencia;
+    enviarSinal(2);
+
+    return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::enviarDisplay( int flag ) {
+    switch( flag ) {
+        case 1 : 
+            set_codigoFuncao((char)0x16);  
+            set_subCodigo((char)0xD3); 
+            break;
+        case 2 : 
+            set_codigoFuncao((char)0x16);  
+            set_subCodigo((char)0xD4);
+            break;
+        default: return EXIT_FAILURE;
+    }  
+  
+    unsigned char insercaoCRC[8] {
+        (unsigned char)get_enderecoDispositivo(),
+        (unsigned char)get_codigoFuncao(),
+        (unsigned char)get_subCodigo(),
+        (unsigned char)*(get_matricula()+0),
+        (unsigned char)*(get_matricula()+1),
+        (unsigned char)*(get_matricula()+2),
+        (unsigned char)*(get_matricula()+3),
+        get_modo()
+    };
+    short crcDeEnvio = calcula_CRC(&insercaoCRC[0], 8);
+    unsigned char crcEmChar[2];
+
+    std::memcpy(crcEmChar, &crcDeEnvio, sizeof(short));
+
+    for(int i{0}; i<11; i++) {
+        this->palavraDeEnvio[i] = insercaoCRC[i];
+    }
+
+    this->palavraDeEnvio[8] = crcEmChar[0];
+    this->palavraDeEnvio[9] = crcEmChar[1];
+    this->palavraDeEnvio[10] = '\0';
+
+    enviarInformacao(10);
+
+    return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::enviarDisplayEstadoSistema( unsigned char modo ) {
+    set_modo(modo);
+    enviarDisplay(1);
+
+    return EXIT_SUCCESS;
+}
+
+bool CommsProtocol::enviarDisplayControle( unsigned char modo ) {
+    set_modo(modo);
+    enviarDisplay(2);
+
+    return EXIT_SUCCESS;
+}
+
 bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
 
     if ( init() ) {
@@ -103,7 +228,9 @@ bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
 
     sleep(1);
 
-    receberInformacao(palavraDeEnvio[2]);
+    if( palavraDeEnvio[2] == 0xD1 || palavraDeEnvio[2] == 0xD2 ) 
+        return EXIT_SUCCESS;
+    else receberInformacao(palavraDeEnvio[2]);
 
     return EXIT_SUCCESS;
 }
@@ -225,4 +352,12 @@ float CommsProtocol::get_temperaturaReferencia() {
 
 void CommsProtocol::set_temperaturaReferencia( float temperaturaReferencia ) {
     this->temperaturaReferencia = temperaturaReferencia;
+}
+
+unsigned char CommsProtocol::get_modo() {
+    return this->modo;
+}
+
+void CommsProtocol::set_modo( unsigned char modo ) {
+    this->modo = modo;
 }

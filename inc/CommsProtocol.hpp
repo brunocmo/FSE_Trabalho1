@@ -25,6 +25,9 @@ class CommsProtocol {
         unsigned char palavraDeEnvio[255];
         float temperaturaInterna;
         float temperaturaReferencia;
+        int valorSinalControle;
+        float valorSinalReferencia;
+        unsigned char modo;
 
     public:
 
@@ -38,20 +41,16 @@ class CommsProtocol {
         bool solicitarTemperaturaPotenciometro();
         bool lerComandosDoUsuario();
 
+        bool enviarSinal( int flag );
+        bool enviarSinalDeControle(int valorSinalControle);
+        bool enviarSinalDeReferencia(float valorSinalReferencia);
+
+        bool enviarDisplay( int flag );
+        bool enviarDisplayEstadoSistema( unsigned char modo );
+        bool enviarDisplayControle( unsigned char modo );
+
         bool enviarInformacao(int numeroCaracteres);
         bool receberInformacao(unsigned char flag);
-
-        void pedidoInteiro();
-        void pedidoReal();
-        void pedidoString();
-
-        void enviarInteiro(int inteiroEnviado);
-        void enviarReal(float floatEnviado);
-        void enviarString(std::string stringEnviado);
-
-        void escolherDispositivo(char numeroDispositivo);
-        void escolherFuncao(char codigoFuncao);
-
 
         void enviar(std::string solicitacao);
         
@@ -76,6 +75,9 @@ class CommsProtocol {
 
         float get_temperaturaReferencia();
         void set_temperaturaReferencia( float temperaturaReferencia );
+
+        unsigned char get_modo();
+        void set_modo( unsigned char modo );
 };
 
 

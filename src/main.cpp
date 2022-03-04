@@ -1,9 +1,17 @@
 #include <iostream>
+#include <signal.h>
 #include "../inc/CommsProtocol.hpp"
 #include "../inc/TemperatureStatus.hpp"
 #include "../inc/ShowInfoLCD.hpp"
 #include "../inc/ControleTemperatura.hpp"
 #include "../inc/pid.hpp"
+
+bool executar{true};
+
+void tratarSinal(int s){
+	printf(" Fechando o programa... \n");
+	executar = false;
+};
 
 int main( int argc, char *argv[] ) {
 
@@ -14,10 +22,11 @@ int main( int argc, char *argv[] ) {
 
 	int sinalControle{0};
 	bool sistemaLigado{false};
+	signal(SIGINT, tratarSinal);
 
 	pid_configura_constantes( 20.0, 0.1, 100.0 );
 
-	while(1) {
+	while(executar) {
 
 		uart->lerComandosDoUsuario();
 

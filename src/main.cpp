@@ -40,6 +40,14 @@ int main() {
 
 	lcd->mostrarMensagem();
 
+	teste->enviarDisplayEstadoSistema( 0x00 );
+	teste->enviarDisplayControle( 0x00 );
+
+	teste->lerComandosDoUsuario();
+
+	teste->enviarSinalDeControle( 20 );
+	teste->enviarSinalDeReferencia( 67.0f );
+
 	// sleep(2);
 
 	// if ( teste->solicitarTemperaturaPotenciometro() ) {

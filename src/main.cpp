@@ -80,7 +80,7 @@ int main() {
 
 
 	char temperaturaAmbiente[16] = "Temp. Ambiente:";
-	// char tempReferencia[16] = "Temp. Pot.:";
+	char tempReferencia[16] = "Temp. Pot.:";
 	// char tempInterna[16] = "Temp. Interna.:";
 
 
@@ -96,12 +96,12 @@ int main() {
 
 	lcd->mostrarMensagem();
 
-	// sleep(3); 
+	sleep(3); 
 
-	// lcd->set_mensagemAcima16(tempReferencia);
-	// lcd->typeFloat( teste->get_temperaturaReferencia() );
+	lcd->set_mensagemAcima16(tempReferencia);
+	lcd->typeFloat( uart->get_temperaturaReferencia() );
 
-	// lcd->mostrarMensagem();
+	lcd->mostrarMensagem();
 
 	// sleep(3); 
 

@@ -46,9 +46,9 @@ int main() {
 				break;
 			case 2: 
 				uart->enviarDisplayEstadoSistema( 0x00 );
-				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
-				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
-				lcd->mostrarMensagem();
+				// lcd->set_mensagemAcima16(sistemaDesligadoAcima);
+				// lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
+				// lcd->mostrarMensagem();
 				sistemaLigado = false;
 				break;
 			case 3:
@@ -70,18 +70,15 @@ int main() {
 
 			// controleDaTemperatura.mudarTemperatura(sinalControle);
 
-			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
+			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
 			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
-
-			printf("TR %.2f TE %.2f\n", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-			printf("TI %.2f        \n", uart->get_temperaturaInterna());
 
 			printf("===> %s\n", sistemaTelaAcima);
 			printf("===> %s\n", sistemaTelaAbaixo);
 
-			lcd->set_mensagemAcima16( sistemaTelaAcima);
-			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-			lcd->mostrarMensagem();
+			// lcd->set_mensagemAcima16( sistemaTelaAcima);
+			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			// lcd->mostrarMensagem();
 		}
 	}
 

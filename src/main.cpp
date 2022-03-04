@@ -20,63 +20,69 @@ int main() {
 	CommsProtocol * uart = new CommsProtocol();
 	ControleTemperatura controleDaTemperatura;
 
-	// char sistemaTelaAcima[16] = "";
-	// char sistemaTelaAbaixo[16] = "";
+	char sistemaTelaAcima[16] = "";
+	char sistemaTelaAbaixo[16] = "";
 
-	// char sistemaDesligadoAcima[16] = "   Desligado   ";
-	// char sistemaDesligadoAbaixo[16] = "               ";
+	char sistemaDesligadoAcima[16] = "   Desligado   ";
+	char sistemaDesligadoAbaixo[16] = "               ";
 
-	// int sinalControle{0};
-	// bool sistemaLigado{false};
-	// signal(SIGINT, tratarSinal);
+	int sinalControle{0};
+	bool sistemaLigado{false};
+	signal(SIGINT, tratarSinal);
 
-	// pid_configura_constantes( 30.0, 0.2, 400.0 );
+	pid_configura_constantes( 30.0, 0.2, 400.0 );
 
-	// uart->enviarSinalDeReferencia( 28.00f );
+	uart->enviarSinalDeReferencia( 28.00f );
 
-	// while(executar) {
+	while(executar) {
 
-	// 	uart->lerComandosDoUsuario();
+		uart->lerComandosDoUsuario();
 
-	// 	switch( uart->get_codigoRetorno() ) {
-	// 		case 1:
-	// 			uart->enviarDisplayEstadoSistema( 0x01 );
-	// 			sistemaLigado = true;
-	// 			break;
-	// 		case 2: 
-	// 			uart->enviarDisplayEstadoSistema( 0x00 );
-	// 			lcd->set_mensagemAcima16(sistemaDesligadoAcima);
-	// 			lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
-	// 			lcd->mostrarMensagem();
-	// 			sistemaLigado = false;
-	// 			break;
-	// 		case 3:
-	// 			uart->enviarDisplayControle( 0x00 );
-	// 			break;
-	// 		case 4:
-	// 			uart->enviarDisplayControle( 0x01 );
-	// 		default: break;	
-	// 	}
+		switch( uart->get_codigoRetorno() ) {
+			case 1:
+				uart->enviarDisplayEstadoSistema( 0x01 );
+				sistemaLigado = true;
+				break;
+			case 2: 
+				uart->enviarDisplayEstadoSistema( 0x00 );
+				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
+				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
+				lcd->mostrarMensagem();
+				sistemaLigado = false;
+				break;
+			case 3:
+				uart->enviarDisplayControle( 0x00 );
+				break;
+			case 4:
+				uart->enviarDisplayControle( 0x01 );
+			default: break;	
+		}
 
-	// 	if( sistemaLigado  ) {
-	// 		uart->solicitarTemperaturaInterna();
-	// 		uart->solicitarTemperaturaPotenciometro();
+		if( sistemaLigado  ) {
+			uart->solicitarTemperaturaInterna();
+			uart->solicitarTemperaturaPotenciometro();
 
-	// 		pid_atualiza_referencia( uart->get_temperaturaReferencia() );
-	// 		sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );
+			pid_atualiza_referencia( uart->get_temperaturaReferencia() );
+			sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );
 
-	// 		uart->enviarSinalDeControle( sinalControle );
+			uart->enviarSinalDeControle( sinalControle );
 
-	// 		controleDaTemperatura.mudarTemperatura(sinalControle);
+			controleDaTemperatura.mudarTemperatura(sinalControle);
 
-	// 		sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
-	// 		sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
+			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
-	// 		lcd->set_mensagemAcima16( sistemaTelaAcima);
-	// 		lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-	// 		lcd->mostrarMensagem();
-	// 	}
-	// }
+			printf("TR %.2f TE %.2f\n", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
+			printf("TI %.2f        \n", uart->get_temperaturaInterna()));
+
+			printf("===> %s\n", sistemaTelaAcima);
+			printf("===> %s\n", sistemaTelaAbaixo);
+
+			lcd->set_mensagemAcima16( sistemaTelaAcima);
+			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			lcd->mostrarMensagem();
+		}
+	}
 
 
 	char temperaturaAmbiente[16] = "Temp. Ambiente:";

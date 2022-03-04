@@ -15,10 +15,11 @@ void tratarSinal(int s){
 
 int main() {
 
+	ControleTemperatura controleDaTemperatura;
 	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();
 	CommsProtocol * uart = new CommsProtocol();
-	ControleTemperatura controleDaTemperatura;
+
 
 	char sistemaTelaAcima[16] = "";
 	char sistemaTelaAbaixo[16] = "";

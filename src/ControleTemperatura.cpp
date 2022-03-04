@@ -2,20 +2,17 @@
 
 ControleTemperatura::ControleTemperatura() {
 
+    pwmResistor = 4;
+
     if ( wiringPiSetup() == -1) exit(1);
 
     printf("Criação do PWM 100 \n");
+    pinMode(pwmResistor, OUTPUT);
+    softPwmCreate(pwmResistor, 1, 100);
+    softPwmWrite(pwmResistor, 100);
+    delay(10000);
 
-    printf("Resultado: %d", softPwmCreate( 4, 0, 100));
-
-    sleep(10);
-
-    printf("Mudou para 50 \n");
-    softPwmWrite( 4, 50);
-
-    sleep(10);
-
-    printf("PWM desligando");
+    printf("PWM desligando\n");
     softPwmStop( 4 );
 
 

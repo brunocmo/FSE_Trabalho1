@@ -10,6 +10,10 @@
 class ControleTemperatura {
 
     public:
+
+        int pwmResistor;
+        int pwmVentoinha;
+
         int valorPorcentagem;
 
         ControleTemperatura();

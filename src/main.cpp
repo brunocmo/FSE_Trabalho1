@@ -45,7 +45,9 @@ int main() {
 
 	teste->lerComandosDoUsuario();
 
-	teste->enviarSinalDeControle( 20 );
+	printf(" O comando foi  %d\n", teste->get_codigoRetorno());
+
+	teste->enviarSinalDeControle( 69 );
 	teste->enviarSinalDeReferencia( 50.0f );
 
 	// sleep(2);

@@ -270,13 +270,17 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
             if( crcRecebido == crc ) {
 
                 if( (flag >> 4) == 0x0C ) {
-                    std::memcpy(&valorPontoFlut, &rx_buffer[3], sizeof(int));
-                    // printf("Mensagem de comprimento %d: %f\n", rx_length, valorPontoFlut);
 
-                    if( flag == (unsigned char)0xC1) {
-                        set_temperaturaInterna(valorPontoFlut);
+                    if ( flag == 0xC3 ) {
+                        std::memcpy(&valorInteiro, &rx_buffer[3], sizeof(int));
+                        set_codigoRetorno(valorInteiro);
                     } else {
-                        set_temperaturaReferencia(valorPontoFlut);
+                        std::memcpy(&valorPontoFlut, &rx_buffer[3], sizeof(int));
+                        if( flag == (unsigned char)0xC1) {
+                            set_temperaturaInterna(valorPontoFlut);
+                        } else {
+                            set_temperaturaReferencia(valorPontoFlut);
+                        }
                     }
 
                 } else {

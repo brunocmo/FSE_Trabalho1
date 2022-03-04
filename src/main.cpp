@@ -15,7 +15,7 @@ void tratarSinal(int s){
 
 int main() {
 
-	ControleTemperatura controleDaTemperatura;
+	// ControleTemperatura controleDaTemperatura;
 	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();
 	CommsProtocol * uart = new CommsProtocol();
@@ -68,7 +68,7 @@ int main() {
 
 			uart->enviarSinalDeControle( sinalControle );
 
-			controleDaTemperatura.mudarTemperatura(sinalControle);
+			// controleDaTemperatura.mudarTemperatura(sinalControle);
 
 			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
 			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());

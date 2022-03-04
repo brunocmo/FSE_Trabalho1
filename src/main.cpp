@@ -55,10 +55,12 @@ int main() {
 
 	ControleTemperatura umTeste;
 
+	printf("Adicionar temperatura\n");
 	umTeste.mudarTemperatura( 100 );
-	delay(20000);
+	delay(30000);
+	printf("Reduzir temperatura\n");
 	umTeste.mudarTemperatura( -100 );
-	delay(10000);
+	delay(30000);
 	
 	// sleep(2);
 

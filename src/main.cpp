@@ -55,7 +55,11 @@ int main() {
 
 	ControleTemperatura umTeste;
 
-
+	umTeste.mudarTemperatura( 100 );
+	delay(20000);
+	umTeste.mudarTemperatura( -100 );
+	delay(10000);
+	
 	// sleep(2);
 
 	// if ( teste->solicitarTemperaturaPotenciometro() ) {

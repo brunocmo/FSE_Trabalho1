@@ -8,19 +8,18 @@
 #include <unistd.h>
 
 class ControleTemperatura {
-
-    public:
-
+    private:
         int pwmResistor;
         int pwmVentoinha;
 
         int valorPorcentagem;
 
+    public:
         ControleTemperatura();
         ~ControleTemperatura();
 
+        void mudarTemperatura( int valorPorcentagem );
+
+        int get_valorPorcentagem();
 };
-
-
-
 #endif

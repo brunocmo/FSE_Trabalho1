@@ -3,19 +3,43 @@
 ControleTemperatura::ControleTemperatura() {
 
     pwmResistor = 4;
+    pwmVentoinha = 5;
 
     if ( wiringPiSetup() == -1) exit(1);
 
-    printf("Criação do PWM 100 \n");
+    printf("Ligando Resistor e Ventoinha\n");
     pinMode(pwmResistor, OUTPUT);
+    pinMode(pwmVentoinha, OUTPUT);
     softPwmCreate(pwmResistor, 1, 100);
-    softPwmWrite(pwmResistor, 100);
-    delay(10000);
-
-    printf("PWM desligando\n");
-    softPwmStop( 4 );
-
+    softPwmCreate(pwmVentoinha, 1, 100);
+    softPwmWrite(pwmResistor, 0);
+    softPwmWrite(pwmVentoinha, 0);
 
 }
 
-ControleTemperatura::~ControleTemperatura() {}
+ControleTemperatura::~ControleTemperatura() {
+    printf("Desligando Resistor e Ventoinha\n");
+    softPwmStop( pwmResistor );
+    softPwmStop( pwmVentoinha );
+}
+
+void ControleTemperatura::mudarTemperatura( int valorPorcentagem ) {
+    if( valorPorcentagem > -101 && valorPorcentagem < 101) {
+        if(valorPorcentagem >= 0) {
+            softPwmWrite(pwmResistor, valorPorcentagem);
+            softPwmWrite(pwmVentoinha, 0);
+        }else {
+            if( valorPorcentagem < 0 && valorPorcentagem >= -40 ) {
+                softPwmWrite(pwmResistor, 0);
+                softPwmWrite(pwmVentoinha, 40);
+            } else {
+                softPwmWrite(pwmResistor, 0);
+                softPwmWrite(pwmVentoinha, ~valorPorcentagem );
+            }
+        }
+    }
+}
+
+int ControleTemperatura::get_valorPorcentagem() {
+    return this->valorPorcentagem;
+}

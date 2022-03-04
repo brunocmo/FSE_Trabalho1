@@ -79,7 +79,7 @@ int main() {
 	}
 
 
-	// char tempAmbiente[16] = "Temp. Ambiente:";
+	char temperaturaAmbiente[16] = "Temp. Ambiente:";
 	// char tempReferencia[16] = "Temp. Pot.:";
 	// char tempInterna[16] = "Temp. Interna.:";
 
@@ -91,10 +91,10 @@ int main() {
 	// printf("A temperatura referencia eh: %.4lf\n", teste->get_temperaturaReferencia());
 	// printf("A temperatura interna    eh: %.4lf\n", teste->get_temperaturaInterna());
 
-	// lcd->set_mensagemAcima16(tempAmbiente);
-	// lcd->typeFloat( (float)(statusTemperatura->get_temperatura()) );
+	lcd->set_mensagemAcima16(temperaturaAmbiente);
+	lcd->typeFloat( (float)(tempAmbiente->get_temperatura()) );
 
-	// lcd->mostrarMensagem();
+	lcd->mostrarMensagem();
 
 	// sleep(3); 
 

@@ -28,6 +28,7 @@ class CommsProtocol {
         int valorSinalControle;
         float valorSinalReferencia;
         unsigned char modo;
+        int codigoRetorno;
 
     public:
 
@@ -78,6 +79,9 @@ class CommsProtocol {
 
         unsigned char get_modo();
         void set_modo( unsigned char modo );
+
+        int get_codigoRetorno();
+        void set_codigoRetorno( int codigoRetorno );
 };
 
 

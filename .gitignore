@@ -1,2 +1,3 @@
 inc/wiringPi.h
 inc/wiringPiI2C.h
+inc/softPwm.h

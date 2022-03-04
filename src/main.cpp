@@ -46,7 +46,7 @@ int main() {
 	teste->lerComandosDoUsuario();
 
 	teste->enviarSinalDeControle( 20 );
-	teste->enviarSinalDeReferencia( 67.0f );
+	teste->enviarSinalDeReferencia( 50.0f );
 
 	// sleep(2);
 

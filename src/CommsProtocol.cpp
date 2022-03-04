@@ -361,3 +361,11 @@ unsigned char CommsProtocol::get_modo() {
 void CommsProtocol::set_modo( unsigned char modo ) {
     this->modo = modo;
 }
+
+int CommsProtocol::get_codigoRetorno() {
+    return this->codigoRetorno;
+}
+
+void CommsProtocol::set_codigoRetorno( int codigoRetorno ) {
+    this->codigoRetorno = codigoRetorno;
+}

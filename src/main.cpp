@@ -23,6 +23,9 @@ int main() {
 	char sistemaTelaAcima[16] = "";
 	char sistemaTelaAbaixo[16] = "";
 
+	char sistemaDesligadoAcima[16] = "   Desligado   ";
+	char sistemaDesligadoAbaixo[16] = "               ";
+
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
@@ -42,8 +45,8 @@ int main() {
 				break;
 			case 2: 
 				uart->enviarDisplayEstadoSistema( 0x00 );
-				lcd->set_mensagemAcima16("   Desligado!   ");
-				lcd->set_mensagemAbaixo16("                ");
+				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
+				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
 				lcd->mostrarMensagem();
 				sistemaLigado = false;
 				break;
@@ -67,7 +70,7 @@ int main() {
 			controleDaTemperatura.mudarTemperatura(sinalControle);
 
 			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
-			sprintf( sistemaTelaAbaixo, "TI %.2f         ", uart->get_temperaturaInterna());
+			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
 			lcd->set_mensagemAcima16( sistemaTelaAcima);
 			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);

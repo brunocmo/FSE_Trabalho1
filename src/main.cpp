@@ -114,6 +114,16 @@ int main() {
 
 	lcd->mostrarMensagem();
 
+	sleep(3);
+
+	sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+
+	lcd->set_mensagemAcima16( sistemaTelaAcima);
+	lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+	lcd->mostrarMensagem();
+
+
 	// teste->enviarDisplayEstadoSistema( 0x00 );
 	// teste->enviarDisplayControle( 0x00 );
 

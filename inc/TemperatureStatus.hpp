@@ -39,6 +39,13 @@ private:
     double temperatura;
 
 public: 
+
+    struct bme280_dev dev;
+
+    struct identifier id;
+
+    int8_t rslt = BME280_OK;
+
     TemperatureStatus();
     ~TemperatureStatus();
 

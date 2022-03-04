@@ -4,17 +4,19 @@ ShowInfoLCD::ShowInfoLCD() {
     std::strcpy( mensagemAcima16, "                " );
     std::strcpy( mensagemAbaixo16, "                " );
     fd = wiringPiI2CSetup(I2C_ADDR);
+
+    if (wiringPiSetup() == -1){ 
+		printf("Erro abertura LCD");
+		exit (1);
+	}
+
+    lcd_init(); // setup LCD
 }
 
 ShowInfoLCD::~ShowInfoLCD() {}
 
 void ShowInfoLCD::mostrarMensagem() {
-    if (wiringPiSetup() == -1) exit (1);
-
     //printf("fd = %d ", fd);
-
-    lcd_init(); // setup LCD
-
     lcdLoc(LINE1);
     typeln(get_mensagemAcima16());
     lcdLoc(LINE2);

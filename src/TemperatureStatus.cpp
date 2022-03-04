@@ -2,16 +2,13 @@
 
 TemperatureStatus::TemperatureStatus() {
     this->temperatura = 0;
+
+    init();
 }
 
 TemperatureStatus::~TemperatureStatus() {}
 
 bool TemperatureStatus::init() {
-    struct bme280_dev dev;
-
-    struct identifier id;
-
-    int8_t rslt = BME280_OK;
 
     char filePath[] = "/dev/i2c-1";
 
@@ -44,6 +41,11 @@ bool TemperatureStatus::init() {
         exit(1);
     }
 
+    return EXIT_SUCCESS;
+}
+
+double TemperatureStatus::get_temperatura() {
+    
     rslt = set_temperature(&dev);
     if (rslt != BME280_OK)
     {
@@ -51,11 +53,6 @@ bool TemperatureStatus::init() {
         exit(1);
     }
 
-    return EXIT_SUCCESS;
-}
-
-double TemperatureStatus::get_temperatura() {
-    init();
     return this->temperatura;
 }
 

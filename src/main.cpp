@@ -11,9 +11,9 @@ bool executar{true};
 void tratarSinal(int s){
 	printf(" Fechando o programa... \n");
 	executar = false;
-};
+}
 
-int main( int argc, char *argv[] ) {
+int main() {
 
 	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();

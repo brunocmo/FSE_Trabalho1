@@ -73,7 +73,7 @@ int main() {
 			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
 			printf("TR %.2f TE %.2f\n", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
-			printf("TI %.2f        \n", uart->get_temperaturaInterna()));
+			printf("TI %.2f        \n", uart->get_temperaturaInterna());
 
 			printf("===> %s\n", sistemaTelaAcima);
 			printf("===> %s\n", sistemaTelaAbaixo);

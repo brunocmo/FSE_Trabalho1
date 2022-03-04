@@ -10,6 +10,8 @@
 #include <termios.h>
 #include <bitset>
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include "crc16.h"
 
 class CommsProtocol {

@@ -30,15 +30,13 @@ void ControleTemperatura::mudarTemperatura( int valorPorcentagem ) {
         if(valorPorcentagem >= 0) {
             softPwmWrite(pwmResistor, valorPorcentagem);
             softPwmWrite(pwmVentoinha, 0);
-            printf("Tempratura %d", valorPorcentagem);
         }else {
             if( valorPorcentagem < 0 && valorPorcentagem >= -40 ) {
                 softPwmWrite(pwmResistor, 0);
                 softPwmWrite(pwmVentoinha, 40);
             } else {
                 softPwmWrite(pwmResistor, 0);
-                softPwmWrite(pwmVentoinha, ~valorPorcentagem );
-                printf("Tempratura %d", ~valorPorcentagem);
+                softPwmWrite(pwmVentoinha, valorPorcentagem*-1 );
             }
         }
     }

@@ -26,14 +26,14 @@ int main() {
 
 	lcd->mostrarMensagem();
 
-	sleep(1); 
+	sleep(3); 
 
 	lcd->set_mensagemAcima16(tempReferencia);
 	lcd->typeFloat( teste->get_temperaturaReferencia() );
 
 	lcd->mostrarMensagem();
 
-	sleep(1); 
+	sleep(3); 
 
 	lcd->set_mensagemAcima16(tempInterna);
 	lcd->typeFloat( teste->get_temperaturaInterna());

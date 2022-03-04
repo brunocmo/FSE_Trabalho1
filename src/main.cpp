@@ -2,6 +2,7 @@
 #include "../inc/CommsProtocol.hpp"
 #include "../inc/TemperatureStatus.hpp"
 #include "../inc/ShowInfoLCD.hpp"
+#include "../inc/ControleTemperatura.hpp"
 
 int main() {
 
@@ -49,6 +50,11 @@ int main() {
 
 	teste->enviarSinalDeControle( 69 );
 	teste->enviarSinalDeReferencia( 50.0f );
+
+	printf("\n==================\nControle de temperatura interna teste \n");
+
+	ControleTemperatura umTeste;
+
 
 	// sleep(2);
 

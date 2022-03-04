@@ -6,14 +6,14 @@ ControleTemperatura::ControleTemperatura() {
 
     printf("Criação do PWM 100 \n");
 
-    softPwmCreate( 4, 0, 100);
+    printf("Resultado: %d", softPwmCreate( 4, 0, 100);
 
-    sleep(5);
+    sleep(10);
 
     printf("Mudou para 50 \n");
     softPwmWrite( 4, 50);
 
-    sleep(5);
+    sleep(10);
 
     printf("PWM desligando");
     softPwmStop( 4 );

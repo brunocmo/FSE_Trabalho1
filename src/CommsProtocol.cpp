@@ -226,7 +226,7 @@ bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
         printf("Erro no envio de dados - TX\n");
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     if( palavraDeEnvio[2] == 0xD1 || palavraDeEnvio[2] == 0xD2 ) 
         return EXIT_SUCCESS;

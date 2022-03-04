@@ -20,11 +20,16 @@ int main() {
 	CommsProtocol * uart = new CommsProtocol();
 	ControleTemperatura controleDaTemperatura;
 
+	char sistemaTelaAcima[16] = "";
+	char sistemaTelaAbaixo[16] = "";
+
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
 
-	pid_configura_constantes( 20.0, 0.1, 100.0 );
+	pid_configura_constantes( 30.0, 0.2, 400.0 );
+
+	uart->enviarSinalDeReferencia( 67.00f );
 
 	while(executar) {
 
@@ -37,6 +42,9 @@ int main() {
 				break;
 			case 2: 
 				uart->enviarDisplayEstadoSistema( 0x00 );
+				lcd->set_mensagemAcima16("   Desligado!   ");
+				lcd->set_mensagemAbaixo16("                ");
+				lcd->mostrarMensagem();
 				sistemaLigado = false;
 				break;
 			case 3:
@@ -58,10 +66,13 @@ int main() {
 
 			controleDaTemperatura.mudarTemperatura(sinalControle);
 
-			printf("TempInt: %.2f -- TempPot: %.2f --", uart->get_temperaturaInterna(), uart->get_temperaturaReferencia());
-			printf("SinalControle: %d\n", sinalControle);
+			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
+			sprintf( sistemaTelaAbaixo, "TI %.2f         ", uart->get_temperaturaInterna());
+
+			lcd->set_mensagemAcima16( sistemaTelaAcima);
+			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			lcd->mostrarMensagem();
 		}
-		delay(1000);
 	}
 
 

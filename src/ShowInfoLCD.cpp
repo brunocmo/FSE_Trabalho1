@@ -21,6 +21,7 @@ void ShowInfoLCD::mostrarMensagem() {
     typeln(get_mensagemAcima16());
     lcdLoc(LINE2);
     typeln(get_mensagemAbaixo16());
+    printf("=============To aqui\n");
 }
 
 // float to string

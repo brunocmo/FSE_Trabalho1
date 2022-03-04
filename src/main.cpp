@@ -21,11 +21,11 @@ int main() {
 	CommsProtocol * uart = new CommsProtocol();
 
 
-	char sistemaTelaAcima[16] = "";
-	char sistemaTelaAbaixo[16] = "";
+	char sistemaTelaAcima[20] = "";
+	char sistemaTelaAbaixo[20] = "";
 
-	char sistemaDesligadoAcima[16] = "   Desligado   ";
-	char sistemaDesligadoAbaixo[16] = "               ";
+	char sistemaDesligadoAcima[20] = "   Desligado   ";
+	char sistemaDesligadoAbaixo[20] = "               ";
 
 	int sinalControle{0};
 	bool sistemaLigado{false};
@@ -73,7 +73,7 @@ int main() {
 			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
 			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
-			printf("TR %.2f TE %.2f\n", uart->get_temperaturaReferencia(), tempAmbiente->get_temperatura());
+			printf("TR %.2f TE %.2f\n", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
 			printf("TI %.2f        \n", uart->get_temperaturaInterna());
 
 			printf("===> %s\n", sistemaTelaAcima);

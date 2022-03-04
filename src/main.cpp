@@ -30,9 +30,9 @@ int main() {
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
 
-	pid_configura_constantes( 20.0, 0.1, 100.0 );
+	pid_configura_constantes( 30.0, 0.2, 400.0 );
 
-	uart->enviarSinalDeReferencia( 67.00f );
+	uart->enviarSinalDeReferencia( 28.00f );
 
 	while(executar) {
 

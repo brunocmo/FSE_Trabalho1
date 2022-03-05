@@ -10,9 +10,13 @@ CommsProtocol::CommsProtocol() {
     this->matricula[2] = 4;
     this->matricula[3] = 8;
 
+    init();
+
 }
 
-CommsProtocol::~CommsProtocol() {}
+CommsProtocol::~CommsProtocol() {
+    close(get_uart0_filestream());
+}
 
 bool CommsProtocol::init() {
     set_uart0_filestream( open("/dev/serial0", O_RDWR | O_NOCTTY | O_NDELAY) );
@@ -211,10 +215,6 @@ bool CommsProtocol::enviarDisplayControle( unsigned char modo ) {
 
 bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
 
-    if ( init() ) {
-        return EXIT_FAILURE;
-    }
-
     // for( unsigned char letra: palavraDeEnvio) {
     //     if( letra == '\0') break;
     //     printf("%X \n", letra);
@@ -296,7 +296,6 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
         }
     }
 
-    close(get_uart0_filestream());
     return EXIT_SUCCESS;
 }
 

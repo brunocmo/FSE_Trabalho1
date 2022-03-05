@@ -9,8 +9,6 @@ CurvaReflow::~CurvaReflow() {}
 
 void CurvaReflow::carregarValores() {
 
-    int posicaoFinal;
-
     char c;
     std::string palavra;
 
@@ -19,7 +17,6 @@ void CurvaReflow::carregarValores() {
     if( arquivo.is_open()) {
 
         arquivo.seekg(0, arquivo.end);
-        posicaoFinal = arquivo.tellg();
         arquivo.seekg(0, arquivo.beg);
 
         arquivo.seekg( 23, arquivo.cur );

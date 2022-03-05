@@ -27,8 +27,8 @@ int main() {
 	char sistemaTelaAcima[16] = "  Modo: UART   ";
 	char sistemaTelaAbaixo[16];
 
-	char sistemaDesligadoAcima[16] = "    Sistema    ";
-	char sistemaDesligadoAbaixo[16] = "   Desligado   ";
+	char sistemaDesligadoAcima[16] = "   Desligado   ";
+	char sistemaDesligadoAbaixo[16] = "      OFF      ";
 
 	float temperaturaReferencia = 28.00f;
 	bool modoUART = true;

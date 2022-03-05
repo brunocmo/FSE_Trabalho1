@@ -90,8 +90,7 @@ int main() {
 				(float)tempAmbiente->get_temperatura()
 			);
 
-			lcd->set_mensagemAcima16(temperaturaAmbiente);
-			lcd->typeFloat( (float)tempAmbiente->get_temperatura() );
+			lcd->set_mensagemAcima16(sistemaTelaAbaixo);
 
 			lcd->mostrarMensagem();
 

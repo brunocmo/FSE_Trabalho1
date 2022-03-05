@@ -116,8 +116,10 @@ int main() {
 				(float)tempAmbiente->get_temperatura()
 			);
 
-			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-			lcd->mostrarMensagem();
+			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			// lcd->mostrarMensagem();
+			
+			std::cout << "Tempo: " << tempoReflow << "\n";
 
 			tempoReflow++;
 

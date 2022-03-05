@@ -70,15 +70,15 @@ int main() {
 
 			// controleDaTemperatura.mudarTemperatura(sinalControle);
 
-			sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-			sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+			std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+			std::sprintf( sistemaTelaAbaixo, "TI%.2f         ", uart->get_temperaturaInterna());
 
 			printf("===> %s\n", sistemaTelaAcima);
 			printf("===> %s\n", sistemaTelaAbaixo);
 
-			// lcd->set_mensagemAcima16( sistemaTelaAcima);
-			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-			// lcd->mostrarMensagem();
+			lcd->set_mensagemAcima16( sistemaTelaAcima);
+			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			lcd->mostrarMensagem();
 		}
 	}
 
@@ -119,8 +119,8 @@ int main() {
 
 	sleep(3);
 
-	std::sprintf( sistemaTelaAcima, "TR %.2fTE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	std::sprintf( sistemaTelaAbaixo, "TI %.2f      ", uart->get_temperaturaInterna());
+	std::sprintf( sistemaTelaAcima, "TR %.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	std::sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
 	printf("===> %s\n", sistemaTelaAcima);
 	printf("===> %s\n", sistemaTelaAbaixo);

@@ -8,6 +8,7 @@
 #include "../inc/ControleTemperatura.hpp"
 #include "../inc/pid.hpp"
 #include "../inc/CurvaReflow.hpp"
+#include "../inc/RegistrarInformacoes.hpp"
 
 bool executar{true};
 
@@ -23,11 +24,12 @@ int main() {
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();
 	CommsProtocol * uart = new CommsProtocol();
 	CurvaReflow referenciaReflow;
+	RegistrarInformacoes registro;
 
 	int iteradorReflow{0};
 	int tempoReflow{0};
 
-	char tempoString[19];
+	char tempoString[18];
 	struct tm * timeinfo;
 
 	char telaModoUart[16] = "Modo: UART     ";
@@ -141,9 +143,9 @@ int main() {
 			std::time(&comeca_tempo);
 			timeinfo = std::localtime(&comeca_tempo);
 
-    		std::strftime( tempoString, 19, "%d/%m/%y %T ", timeinfo );
+    		std::strftime( tempoString, 18, "%d/%m/%y %T", timeinfo );
 
-			std::printf("%s Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %3d%% Ventoinha: %3d%% \n", 
+			std::printf("%s -> Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %3d%% Ventoinha: %3d%% \n", 
 				tempoString,
 				uart->get_temperaturaInterna(),
 				tempAmbiente->get_temperaturaEmFloat(),
@@ -151,6 +153,13 @@ int main() {
 				controleDaTemperatura.get_valorResistor(),
 				controleDaTemperatura.get_valorVentoinha()
 			);
+
+			registro.set_dataHora(tempoString);
+			registro.set_tempInterna(uart->get_temperaturaInterna());
+			registro.set_tempExterna(tempAmbiente->get_temperaturaEmFloat());
+			registro.set_tempReferencia(uart->get_temperaturaReferencia());
+			registro.set_valorPotenciometro(sinalControle);
+			registro.registrarInformacoes();
 
 		}
 	}

@@ -21,11 +21,14 @@ int main() {
 	CommsProtocol * uart = new CommsProtocol();
 
 
-	char sistemaTelaAcima[16];
+	char telaModoUart[16] = "Modo: UART     ";
+	char telaModoTerminal[16] = "Modo: Terminal ";
+
+	char sistemaTelaAcima[16] = "  Modo: UART   ";
 	char sistemaTelaAbaixo[16];
 
-	char sistemaDesligadoAcima[16] = "   Desligado   ";
-	char sistemaDesligadoAbaixo[16] = "               ";
+	char sistemaDesligadoAcima[16] = "    Sistema    ";
+	char sistemaDesligadoAbaixo[16] = "   Desligado   ";
 
 	char temperaturaAmbiente[16] = "Temp. Ambiente:";
 	char tempReferencia[16] = "Temp. Pot.:";
@@ -41,6 +44,7 @@ int main() {
 	lcd->set_mensagemAbaixo16( sistemaDesligadoAbaixo );
 	lcd->mostrarMensagem();
 
+	uart->enviarDisplayControle( 0x00 );
 	uart->enviarSinalDeReferencia( 28.00f );
 
 	while(executar) {
@@ -54,16 +58,18 @@ int main() {
 				break;
 			case 2: 
 				uart->enviarDisplayEstadoSistema( 0x00 );
-				// lcd->set_mensagemAcima16(sistemaDesligadoAcima);
-				// lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
-				// lcd->mostrarMensagem();
+				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
+				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
+				lcd->mostrarMensagem();
 				sistemaLigado = false;
 				break;
 			case 3:
 				uart->enviarDisplayControle( 0x00 );
+				std::strcpy( sistemaTelaAcima, telaModoUart );
 				break;
 			case 4:
 				uart->enviarDisplayControle( 0x01 );
+				std::strcpy( sistemaTelaAcima, telaModoTerminal );
 			default: break;	
 		}
 
@@ -78,11 +84,11 @@ int main() {
 
 			// controleDaTemperatura.mudarTemperatura(sinalControle);
 
-			std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-			std::sprintf( sistemaTelaAbaixo, "TI%.2f         ", uart->get_temperaturaInterna());
-
-			printf("===> %s\n", sistemaTelaAcima);
-			printf("===> %s\n", sistemaTelaAbaixo);
+			std::sprintf( sistemaTelaAbaixo, "%.1f %.1f %.1f", 
+				uart->get_temperaturaInterna(),
+				uart->get_temperaturaReferencia(), 
+				(float)tempAmbiente->get_temperatura()
+			);
 
 			lcd->set_mensagemAcima16(temperaturaAmbiente);
 			lcd->typeFloat( (float)tempAmbiente->get_temperatura() );
@@ -94,10 +100,6 @@ int main() {
 			// lcd->mostrarMensagem();
 		}
 	}
-
-
-
-
 
 	uart->solicitarTemperaturaInterna();
 	uart->solicitarTemperaturaPotenciometro();

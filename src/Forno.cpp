@@ -169,7 +169,7 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 	lcd->set_mensagemAbaixo16( sistemaDesligadoAbaixo );
 	lcd->mostrarMensagem();
 
-	uart->enviarDisplayControle( MODO_UART );
+	uart->enviarDisplayControle( MODO_TERMINAL );
 	
 	lcd->set_mensagemAcima16(sistemaTelaAcima);
 	uart->enviarSinalDeReferencia( temperaturaReferenciaMenu );

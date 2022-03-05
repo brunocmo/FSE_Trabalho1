@@ -288,7 +288,7 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
                     std::memcpy(&valorInteiro, &rx_buffer[3], sizeof(int));
 
                     if( flag == 0xD3 ) {
-                        if( valorInteiro == 0 ) {
+                        if( valorInteiro == 1 ) {
                             printf("Ligando o forno!\n");
                         } else {
                             printf("Desligando o forno!\n");

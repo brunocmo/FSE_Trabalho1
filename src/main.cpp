@@ -68,5 +68,5 @@ int main(int argc, char * argv[]) {
 
 	std::cout << "Obrigado por usar o sistema! " << '\n';
 
-	return EXIT_SUCCESS;
+	exit(EXIT_SUCCESS);
 }

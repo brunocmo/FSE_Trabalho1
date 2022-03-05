@@ -30,6 +30,9 @@ int main() {
 	char sistemaDesligadoAcima[16] = "    Sistema    ";
 	char sistemaDesligadoAbaixo[16] = "   Desligado   ";
 
+	float temperaturaReferencia = 28.00f;
+	bool modoUART = true;
+
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
@@ -43,7 +46,7 @@ int main() {
 	uart->enviarDisplayControle( 0x00 );
 	
 	lcd->set_mensagemAcima16(sistemaTelaAcima);
-	uart->enviarSinalDeReferencia( 28.00f );
+	uart->enviarSinalDeReferencia( temperaturaReferencia );
 
 	while(executar) {
 
@@ -65,17 +68,24 @@ int main() {
 				uart->enviarDisplayControle( 0x00 );
 				std::strcpy( sistemaTelaAcima, telaModoUart );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
+				modoUART = true;
 				break;
 			case 4:
 				uart->enviarDisplayControle( 0x01 );
 				std::strcpy( sistemaTelaAcima, telaModoTerminal );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
+				modoUART = false;
 			default: break;	
 		}
 
-		if( sistemaLigado  ) {
+		if( sistemaLigado ) {
+
 			uart->solicitarTemperaturaInterna();
-			uart->solicitarTemperaturaPotenciometro();
+
+			if (modoUART) 
+				uart->solicitarTemperaturaPotenciometro();
+			else	
+				uart->set_temperaturaReferencia(temperaturaReferencia);
 
 			pid_atualiza_referencia( uart->get_temperaturaReferencia() );
 			sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );

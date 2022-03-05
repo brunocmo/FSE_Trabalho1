@@ -109,8 +109,8 @@ int main() {
 
 	sleep(3); 
 
-	strcpy( tempInterna, "TI            ");
-	strcpy( tempReferencia, "TE  xD        ");
+	strcpy( tempInterna, "TI             ");
+	strcpy( tempReferencia, "TE  xD         ");
 
 	lcd->set_mensagemAcima16(tempInterna);
 	lcd->set_mensagemAbaixo16( tempReferencia );
@@ -119,8 +119,8 @@ int main() {
 
 	sleep(3);
 
-	std::sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	std::sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+	std::sprintf( sistemaTelaAcima, "TR %.2fTE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	std::sprintf( sistemaTelaAbaixo, "TI %.2f      ", uart->get_temperaturaInterna());
 
 	printf("===> %s\n", sistemaTelaAcima);
 	printf("===> %s\n", sistemaTelaAbaixo);

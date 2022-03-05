@@ -246,7 +246,7 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
 
     if(get_uart0_filestream() != -1) {
 
-        usleep(600 * 1000);
+        usleep(500 * 1000);
 
         rx_length = read(get_uart0_filestream(), (void*)rx_buffer, 100);
         if(rx_length < 0){

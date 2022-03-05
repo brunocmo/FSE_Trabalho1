@@ -95,6 +95,7 @@ int main() {
 			else {
 				
 				if( tempoReflow == referenciaReflow.tempo.at(iteradorReflow) ) {
+					std::cout << "Mudando temperatura!" << '\n';
 					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
 					iteradorReflow++;
 				}				

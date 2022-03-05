@@ -12,7 +12,7 @@
 bool executar{true};
 
 void tratarSinal(int s){
-	printf(" Fechando o programa... \n");
+	printf("\nFechando o programa... \n");
 	executar = false;
 }
 
@@ -47,8 +47,6 @@ int main() {
 	auto voltaCronometro = std::chrono::system_clock::now();
 	std::time_t comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
 	std::chrono::duration<double> tempoPassado = voltaCronometro - comecaCronometro;
-
-	// float valorTemperaturaAmbiente{(float)tempAmbiente->get_temperatura()};
 
 	int sinalControle{0};
 	bool sistemaLigado{false};
@@ -145,7 +143,7 @@ int main() {
 
     		std::strftime( tempoString, 19, "%d/%m/%y %T ", timeinfo );
 
-			std::printf("%s Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %d%% Ventoinha: %d%% \n", 
+			std::printf("%s Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %3d%% Ventoinha: %3d%% \n", 
 				tempoString,
 				uart->get_temperaturaInterna(),
 				tempAmbiente->get_temperaturaEmFloat(),
@@ -156,6 +154,8 @@ int main() {
 
 		}
 	}
+
+	uart->enviarSinalDeControle( 0 );
 
 	delete(lcd);
 	delete(tempAmbiente);

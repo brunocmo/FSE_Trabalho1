@@ -104,6 +104,11 @@ bool Forno::executarSistema() {
 				voltaCronometro = std::chrono::system_clock::now();
 				tempoPassado = voltaCronometro - cronometroReflow;
 
+                printf("tempo tamanho %d\n", (int)referenciaReflow.tempo.size());
+                printf("1 - %d\n", referenciaReflow.tempo.at(0));
+                printf("2 - %d\n", referenciaReflow.tempo.at(1));
+
+
                 if( ((int)referenciaReflow.tempo.size()) > (iteradorReflow+1)) {
                     if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow+1) ) {
                         // std::cout << "Mudando temperatura!" << '\n';

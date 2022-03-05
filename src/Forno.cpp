@@ -118,7 +118,7 @@ bool Forno::executarSistema() {
                     referenciaReflow.temperatura.at(iteradorReflow+1)
                     );
 
-                    if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow+1) ) {
+                    if( ((int)tempoPassado.count()) > referenciaReflow.tempo.at(iteradorReflow+1) ) {
                         // std::cout << "Mudando temperatura!" << '\n';
                         iteradorReflow++;
 

@@ -99,6 +99,8 @@ int main() {
 					iteradorReflow++;
 				}				
 
+				std::cout << "tempo: " << tempoReflow << " iterador: " << iteradorReflow << '\n';
+
 				uart->set_temperaturaReferencia(temperaturaReferencia);
 			}
 

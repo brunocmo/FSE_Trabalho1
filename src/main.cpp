@@ -109,6 +109,8 @@ int main() {
 
 	sleep(3); 
 
+	strcpy( tempInterna, "TI ");
+
 	lcd->set_mensagemAcima16(tempInterna);
 	lcd->typeFloat( uart->get_temperaturaInterna());
 

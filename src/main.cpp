@@ -27,6 +27,9 @@ int main() {
 	int iteradorReflow{0};
 	int tempoReflow{0};
 
+	char tempoString[19];
+	struct tm * timeinfo;
+
 	char telaModoUart[16] = "Modo: UART     ";
 	char telaModoTerminal[16] = "Modo: Terminal ";
 
@@ -137,8 +140,13 @@ int main() {
 			comecaCronometro = std::chrono::system_clock::now();
 			comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
 
-			printf("%s Temp.Interna: %.2f Temp.Externa: %.2f Temp.Rerencia: %.2f Resistor: %d%% Ventoinha: %d%% \n", 
-				std::ctime(&comeca_tempo),
+			std::time(&comeca_tempo);
+			timeinfo = std::localtime(&comeca_tempo);
+
+    		std::strftime( tempoString, 19, "%d/%m/%y %T ", timeinfo );
+
+			std::printf("%s Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %d%% Ventoinha: %d%% \n", 
+				tempoString,
 				uart->get_temperaturaInterna(),
 				tempAmbiente->get_temperaturaEmFloat(),
 				uart->get_temperaturaReferencia(),

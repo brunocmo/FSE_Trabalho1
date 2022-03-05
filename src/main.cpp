@@ -5,6 +5,7 @@
 #include "../inc/ShowInfoLCD.hpp"
 #include "../inc/ControleTemperatura.hpp"
 #include "../inc/pid.hpp"
+#include "../inc/CurvaReflow.hpp"
 
 bool executar{true};
 
@@ -19,7 +20,10 @@ int main() {
 	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();
 	CommsProtocol * uart = new CommsProtocol();
+	CurvaReflow referenciaReflow;
 
+	int iteradorReflow{0};
+	int tempoReflow{0};
 
 	char telaModoUart[16] = "Modo: UART     ";
 	char telaModoTerminal[16] = "Modo: Terminal ";
@@ -30,7 +34,7 @@ int main() {
 	char sistemaDesligadoAcima[16] = "   Desligado   ";
 	char sistemaDesligadoAbaixo[16] = "      OFF      ";
 
-	float temperaturaReferencia = 28.00f;
+	float temperaturaReferencia{28.00f};
 	bool modoUART = true;
 
 	int sinalControle{0};
@@ -47,6 +51,8 @@ int main() {
 	
 	lcd->set_mensagemAcima16(sistemaTelaAcima);
 	uart->enviarSinalDeReferencia( temperaturaReferencia );
+
+	referenciaReflow.carregarValores();
 
 	while(executar) {
 
@@ -74,6 +80,8 @@ int main() {
 				uart->enviarDisplayControle( 0x01 );
 				std::strcpy( sistemaTelaAcima, telaModoTerminal );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
+				tempoReflow = 0;
+				iteradorReflow = 0;
 				modoUART = false;
 			default: break;	
 		}
@@ -84,8 +92,15 @@ int main() {
 
 			if (modoUART) 
 				uart->solicitarTemperaturaPotenciometro();
-			else	
+			else {
+				
+				if( tempoReflow == referenciaReflow.tempo.at(iteradorReflow) ) {
+					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
+					iteradorReflow++;
+				}				
+
 				uart->set_temperaturaReferencia(temperaturaReferencia);
+			}
 
 			pid_atualiza_referencia( uart->get_temperaturaReferencia() );
 			sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );
@@ -102,6 +117,8 @@ int main() {
 
 			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
 			lcd->mostrarMensagem();
+
+			tempoReflow++;
 
 		}
 	}

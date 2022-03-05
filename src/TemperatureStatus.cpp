@@ -137,6 +137,7 @@ int8_t user_i2c_read(uint8_t reg_addr, uint8_t *data, uint32_t len, void *intf_p
  */
 void user_delay_us(uint32_t period, void *intf_ptr)
 {
+    printf("WTF\n");
     usleep(period*1000);
 }
 

@@ -47,6 +47,7 @@ public:
 	char sistemaDesligadoAcima[16];
 	char sistemaDesligadoAbaixo[16];
 
+    float curvaTemperaturaAnterior;
 	float temperaturaReferencia;
 	bool modoUART = true;
 
@@ -72,6 +73,8 @@ public:
     void configurarParametrosPID();
 
     void configurarParametrosViaHostname(  char * hostname );
+
+    float interpolarReferencia( int x_anterior, int x_posterior, int x_atual, float t_anterior, float t_posterior);
 
     double get_pid_Kp();
     void set_pid_Kp( double pid_Kp );

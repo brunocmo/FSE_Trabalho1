@@ -87,6 +87,7 @@ bool Forno::executarSistema() {
 				std::strcpy( sistemaTelaAcima, telaModoTerminal );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
 				iteradorReflow = 0;
+                curvaTemperaturaAnterior = referenciaReflow.tempo.at(iteradorReflow);
 				modoUART = false;
 				cronometroReflow = std::chrono::system_clock::now();
 			default: break;	
@@ -103,13 +104,24 @@ bool Forno::executarSistema() {
 				voltaCronometro = std::chrono::system_clock::now();
 				tempoPassado = voltaCronometro - cronometroReflow;
 
-				if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow) ) {
-					// std::cout << "Mudando temperatura!" << '\n';
-					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
-					iteradorReflow++;
-					uart->enviarSinalDeReferencia(temperaturaReferencia);
-					uart->set_temperaturaReferencia(temperaturaReferencia);
-				}				
+                if(referenciaReflow.tempo.size() > iteradorReflow+1) {
+                    if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow+1) ) {
+                        // std::cout << "Mudando temperatura!" << '\n';
+                        iteradorReflow++;
+
+                    }	
+                }		
+                
+                temperaturaReferencia = interpolarReferencia( 
+                    referenciaReflow.tempo.at(iteradorReflow),
+                    referenciaReflow.tempo.at(iteradorReflow+1),
+                    (int)tempoPassado.count(),
+                    referenciaReflow.temperatura.at(iteradorReflow),
+                    referenciaReflow.temperatura.at(iteradorReflow+1)
+                );
+
+                uart->enviarSinalDeReferencia(temperaturaReferencia);
+                uart->set_temperaturaReferencia(temperaturaReferencia);
 
 			}
 
@@ -286,6 +298,13 @@ void Forno::configurarParametrosViaHostname( char * hostname ) {
         set_pid_Kd( 100.0 );
     }
 
+}
+
+float Forno::interpolarReferencia( int x_anterior, int x_posterior, int x_atual, float t_anterior, float t_posterior){
+    float resultado{0};
+
+    resultado = t_anterior + (((x_atual-x_anterior)/(x_posterior-x_anterior))*(t_posterior-t_anterior));
+    return resultado;
 }
 
 double Forno::get_pid_Kp() {

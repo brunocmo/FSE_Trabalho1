@@ -1,5 +1,7 @@
 #include <iostream>
 #include <signal.h>
+#include <chrono>
+#include <ctime>
 #include "../inc/CommsProtocol.hpp"
 #include "../inc/TemperatureStatus.hpp"
 #include "../inc/ShowInfoLCD.hpp"
@@ -36,6 +38,12 @@ int main() {
 
 	float temperaturaReferencia{28.00f};
 	bool modoUART = true;
+
+	auto comecaCronometro = std::chrono::system_clock::now();
+	auto cronometroReflow = std::chrono::system_clock::now();
+	auto voltaCronometro = std::chrono::system_clock::now();
+	std::time_t comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
+	std::chrono::duration<double> tempoPassado = voltaCronometro - comecaCronometro;
 
 	// float valorTemperaturaAmbiente{(float)tempAmbiente->get_temperatura()};
 
@@ -85,6 +93,7 @@ int main() {
 				tempoReflow = 0;
 				iteradorReflow = 0;
 				modoUART = false;
+				cronometroReflow = std::chrono::system_clock::now();
 			default: break;	
 		}
 
@@ -96,7 +105,10 @@ int main() {
 				uart->solicitarTemperaturaPotenciometro();
 			else {
 				
-				if( tempoReflow == referenciaReflow.tempo.at(iteradorReflow) ) {
+				voltaCronometro = std::chrono::system_clock::now();
+				tempoPassado = voltaCronometro - cronometroReflow;
+
+				if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow) ) {
 					std::cout << "Mudando temperatura!" << '\n';
 					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
 					iteradorReflow++;
@@ -121,10 +133,18 @@ int main() {
 
 			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
 			lcd->mostrarMensagem();
-			
-			std::cout << "Tempo: " << tempoReflow << "\n";
+		
+			comecaCronometro = std::chrono::system_clock::now();
+			comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
 
-			tempoReflow++;
+			printf("%s Temp.Interna: %.2f Temp.Externa: %.2f Temp.Rerencia: %.2f Resistor: %d\% Ventoinha: %d\% \n", 
+				std::ctime(&comeca_tempo),
+				uart->get_temperaturaInterna(),
+				tempAmbiente->get_temperaturaEmFloat(),
+				uart->get_temperaturaReferencia(),
+				controleDaTemperatura.get_valorResistor(),
+				controleDaTemperatura.get_valorVentoinha()
+			);
 
 		}
 	}

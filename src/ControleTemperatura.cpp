@@ -30,13 +30,19 @@ void ControleTemperatura::mudarTemperatura( int valorPorcentagem ) {
         if(valorPorcentagem >= 0) {
             softPwmWrite(pwmResistor, valorPorcentagem);
             softPwmWrite(pwmVentoinha, 0);
+            this->valorVentoinha = 0;
+            this->valorResistor = valorPorcentagem;
         }else {
             if( valorPorcentagem < 0 && valorPorcentagem >= -40 ) {
                 softPwmWrite(pwmResistor, 0);
                 softPwmWrite(pwmVentoinha, 40);
+                this->valorVentoinha = 40;
+                this->valorResistor = 0;
             } else {
                 softPwmWrite(pwmResistor, 0);
                 softPwmWrite(pwmVentoinha, valorPorcentagem*-1 );
+                this->valorVentoinha = valorPorcentagem*-1;
+                this->valorResistor = 0;
             }
         }
     }
@@ -44,4 +50,11 @@ void ControleTemperatura::mudarTemperatura( int valorPorcentagem ) {
 
 int ControleTemperatura::get_valorPorcentagem() {
     return this->valorPorcentagem;
+}
+
+int ControleTemperatura::get_valorResistor() {
+    return this->valorResistor;
+}
+int ControleTemperatura::get_valorVentoinha() {
+    return this->valorVentoinha;
 }

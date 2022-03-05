@@ -14,6 +14,9 @@ class ControleTemperatura {
 
         int valorPorcentagem;
 
+        int valorResistor;
+        int valorVentoinha;
+
     public:
         ControleTemperatura();
         ~ControleTemperatura();
@@ -21,5 +24,9 @@ class ControleTemperatura {
         void mudarTemperatura( int valorPorcentagem );
 
         int get_valorPorcentagem();
+
+        int get_valorResistor();
+        int get_valorVentoinha();
+        
 };
 #endif

@@ -30,10 +30,6 @@ int main() {
 	char sistemaDesligadoAcima[16] = "    Sistema    ";
 	char sistemaDesligadoAbaixo[16] = "   Desligado   ";
 
-	char temperaturaAmbiente[16] = "Temp. Ambiente:";
-	char tempReferencia[16] = "Temp. Pot.:";
-	char tempInterna[16] = "Temp. Interna.:";
-
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
@@ -45,6 +41,8 @@ int main() {
 	lcd->mostrarMensagem();
 
 	uart->enviarDisplayControle( 0x00 );
+	
+	lcd->set_mensagemAcima16(sistemaTelaAcima);
 	uart->enviarSinalDeReferencia( 28.00f );
 
 	while(executar) {
@@ -66,10 +64,12 @@ int main() {
 			case 3:
 				uart->enviarDisplayControle( 0x00 );
 				std::strcpy( sistemaTelaAcima, telaModoUart );
+				lcd->set_mensagemAcima16(sistemaTelaAcima);
 				break;
 			case 4:
 				uart->enviarDisplayControle( 0x01 );
 				std::strcpy( sistemaTelaAcima, telaModoTerminal );
+				lcd->set_mensagemAcima16(sistemaTelaAcima);
 			default: break;	
 		}
 

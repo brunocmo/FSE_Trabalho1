@@ -107,8 +107,8 @@ bool Forno::executarSistema() {
                 printf("tempo tamanho %d\n", (int)referenciaReflow.tempo.size());
                 printf("1 - %d\n", referenciaReflow.tempo.at(0));
                 printf("2 - %d\n", referenciaReflow.tempo.at(1));
-                printf("3 - %d\n", referenciaReflow.temperatura.at(0));
-                printf("4 - %d\n", referenciaReflow.temperatura.at(1));
+                printf("3 - %.2f\n", referenciaReflow.temperatura.at(0));
+                printf("4 - %.2f\n", referenciaReflow.temperatura.at(1));
 
 
                 printf("ME AJUDA!\n");

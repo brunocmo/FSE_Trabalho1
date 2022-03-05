@@ -109,8 +109,8 @@ int main() {
 
 	sleep(3); 
 
-	strcpy( tempInterna, "TI              ");
-	strcpy( tempReferencia, "TE    xD        ");
+	strcpy( tempInterna, "TI            ");
+	strcpy( tempReferencia, "TE  xD        ");
 
 	lcd->set_mensagemAcima16(tempInterna);
 	lcd->set_mensagemAbaixo16( tempReferencia );

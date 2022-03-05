@@ -310,7 +310,7 @@ float Forno::interpolarReferencia( int x_anterior, int x_posterior, int x_atual,
         x_anterior, x_posterior, x_atual, t_anterior, t_posterior
     );
 
-    resultado = t_anterior + (((x_atual-x_anterior)/(x_posterior-x_anterior))*(t_posterior-t_anterior));
+    resultado = t_anterior + (((float)(x_atual-x_anterior)/(float)(x_posterior-x_anterior))*(t_posterior-t_anterior));
     return resultado;
 }
 

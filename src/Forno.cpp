@@ -100,24 +100,10 @@ bool Forno::executarSistema() {
 			if (modoUART) 
 				uart->solicitarTemperaturaPotenciometro();
 			else {
-				
 				voltaCronometro = std::chrono::system_clock::now();
 				tempoPassado = voltaCronometro - cronometroReflow;
 
-                printf("tempo tamanho %d\n", (int)referenciaReflow.tempo.size());
-                printf("1 - %d\n", referenciaReflow.tempo.at(0));
-                printf("2 - %d\n", referenciaReflow.tempo.at(1));
-                printf("3 - %.2f\n", referenciaReflow.temperatura.at(0));
-                printf("4 - %.2f\n", referenciaReflow.temperatura.at(1));
-
-
-                printf("ME AJUDA!\n");
                 if( ((int)referenciaReflow.tempo.size()) > (iteradorReflow+1)) {
-
-                    printf("to aqui\n");
-
-                    printf("teste1 %d\n", iteradorReflow);
-                    printf("teste2 %d\n", iteradorReflow+1);
                     temperaturaReferencia = interpolarReferencia( 
                     referenciaReflow.tempo.at(iteradorReflow),
                     referenciaReflow.tempo.at(iteradorReflow+1),
@@ -126,22 +112,14 @@ bool Forno::executarSistema() {
                     referenciaReflow.temperatura.at(iteradorReflow+1)
                     );
 
-                    printf("To aqui2\n");
                     if( ((int)tempoPassado.count()) > referenciaReflow.tempo.at(iteradorReflow+1) ) {
-                        std::cout << "Mudando temperatura!" << '\n';
+                        // std::cout << "Mudando temperatura!" << '\n';
                         iteradorReflow++;
-
                     }
-
-                    printf("To aqui 3\n");
-
                     // printf("Valor temperatura referencia: %.2f\n", temperaturaReferencia);
-                }		
-                
-
+                }
                 uart->enviarSinalDeReferencia(temperaturaReferencia);
                 uart->set_temperaturaReferencia(temperaturaReferencia);
-
 			}
 
 			pid_atualiza_referencia( uart->get_temperaturaReferencia() );

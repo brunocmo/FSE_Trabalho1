@@ -21,8 +21,8 @@ int main() {
 	CommsProtocol * uart = new CommsProtocol();
 
 
-	char sistemaTelaAcima[20] = "";
-	char sistemaTelaAbaixo[20] = "";
+	char sistemaTelaAcima[16];
+	char sistemaTelaAbaixo[16];
 
 	char sistemaDesligadoAcima[20] = "   Desligado   ";
 	char sistemaDesligadoAbaixo[20] = "               ";
@@ -116,10 +116,13 @@ int main() {
 
 	sleep(3);
 
-	sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+	std::sprintf( sistemaTelaAcima, "TR %.2f TE %.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	std::sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
 
-	lcd->set_mensagemAcima16( sistemaTelaAcima);
+	printf("===> %s\n", sistemaTelaAcima);
+	printf("===> %s\n", sistemaTelaAbaixo);
+
+	lcd->set_mensagemAcima16(sistemaTelaAcima);
 	lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
 	lcd->mostrarMensagem();
 

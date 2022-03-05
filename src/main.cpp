@@ -24,14 +24,21 @@ int main() {
 	char sistemaTelaAcima[16];
 	char sistemaTelaAbaixo[16];
 
-	char sistemaDesligadoAcima[20] = "   Desligado   ";
-	char sistemaDesligadoAbaixo[20] = "               ";
+	char sistemaDesligadoAcima[16] = "   Desligado   ";
+	char sistemaDesligadoAbaixo[16] = "               ";
+
+	char temperaturaAmbiente[16] = "Temp. Ambiente:";
+	char tempReferencia[16] = "Temp. Pot.:";
+	char tempInterna[16] = "Temp. Interna.:";
 
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
 
 	pid_configura_constantes( 30.0, 0.2, 400.0 );
+
+	lcd->set_mensagemAcima16( sistemaDesligadoAcima );
+	lcd->set_mensagemAbaixo16( sistemaDesligadoAbaixo );
 
 	uart->enviarSinalDeReferencia( 28.00f );
 
@@ -76,16 +83,19 @@ int main() {
 			printf("===> %s\n", sistemaTelaAcima);
 			printf("===> %s\n", sistemaTelaAbaixo);
 
-			lcd->set_mensagemAcima16( sistemaTelaAcima);
-			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			lcd->set_mensagemAcima16(temperaturaAmbiente);
+			lcd->typeFloat( (float)tempAmbiente->get_temperatura() );
+
 			lcd->mostrarMensagem();
+
+			// lcd->set_mensagemAcima16( sistemaTelaAcima);
+			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+			// lcd->mostrarMensagem();
 		}
 	}
 
 
-	char temperaturaAmbiente[16] = "Temp. Ambiente:";
-	char tempReferencia[16] = "Temp. Pot.:";
-	char tempInterna[16] = "Temp. Interna.:";
+
 
 
 	uart->solicitarTemperaturaInterna();

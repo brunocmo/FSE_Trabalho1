@@ -1,175 +1,72 @@
 #include <iostream>
-#include <signal.h>
-#include <chrono>
-#include <ctime>
-#include "../inc/CommsProtocol.hpp"
-#include "../inc/TemperatureStatus.hpp"
-#include "../inc/ShowInfoLCD.hpp"
-#include "../inc/ControleTemperatura.hpp"
-#include "../inc/pid.hpp"
-#include "../inc/CurvaReflow.hpp"
-#include "../inc/RegistrarInformacoes.hpp"
+#include "../inc/Forno.hpp"
 
-bool executar{true};
+int main(int argc, char * argv[]) {
 
-void tratarSinal(int s){
-	printf("\nFechando o programa... \n");
-	sleep(1);
-	executar = false;
-}
+	if( argc < 2 ) {
+		std::cout << "Erro na execução, falta o input do hostname" << '\n';
+		return -1;
+    }
 
-int main() {
+	int selecaoMenu{0};
+	float temperaturaReferenciaMenu{0.0f};
+	char inputSimOuNao{'n'};
 
-	ControleTemperatura controleDaTemperatura;
-	ShowInfoLCD * lcd = new ShowInfoLCD();
-	TemperatureStatus * tempAmbiente = new TemperatureStatus();
-	CommsProtocol * uart = new CommsProtocol();
-	CurvaReflow referenciaReflow;
-	RegistrarInformacoes registro;
+	Forno * raspberryEmbarcados = new Forno();
 
-	int iteradorReflow{0};
-	int tempoReflow{0};
+	std::cout << "======== Sistema de Forno para soldagem de placas ========" << '\n';
+	std::cout << "Selecione uma opcao: " << '\n';
+	std::cout << "1. Modo Terminal " << '\n';
+	std::cout << "2. Modo via dashboard " << '\n';
+	std::cout << "0. Sair" << '\n';
 
-	char tempoString[18];
-	struct tm * timeinfo;
+	std::cin >> selecaoMenu;
 
-	char telaModoUart[16] = "Modo: UART     ";
-	char telaModoTerminal[16] = "Modo: Terminal ";
+	system("clear");
 
-	char sistemaTelaAcima[16] = "  Modo: UART   ";
-	char sistemaTelaAbaixo[16];
+	switch (selecaoMenu)
+	{
+		case 1:
+			std::cout << " Digite a temperatura referencia desejada (TR): ";			
+			std::cin >>  temperaturaReferenciaMenu;
 
-	char sistemaDesligadoAcima[16] = "   Desligado   ";
-	char sistemaDesligadoAbaixo[16] = "      OFF      ";
+			system("clear");
 
-	float temperaturaReferencia{28.00f};
-	bool modoUART = true;
+			std::cout << "Deseja inserir os parametros do PID manualmente?(s/n) ";
+			std::cin >> inputSimOuNao;
 
-	auto comecaCronometro = std::chrono::system_clock::now();
-	auto cronometroReflow = std::chrono::system_clock::now();
-	auto voltaCronometro = std::chrono::system_clock::now();
-	std::time_t comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
-	std::chrono::duration<double> tempoPassado = voltaCronometro - comecaCronometro;
+			system("clear");
 
-	int sinalControle{0};
-	bool sistemaLigado{false};
-	signal(SIGINT, tratarSinal);
-
-	pid_configura_constantes( 30.0, 0.2, 400.0 );
-
-	lcd->set_mensagemAcima16( sistemaDesligadoAcima );
-	lcd->set_mensagemAbaixo16( sistemaDesligadoAbaixo );
-	lcd->mostrarMensagem();
-
-	uart->enviarDisplayControle( 0x00 );
-	
-	lcd->set_mensagemAcima16(sistemaTelaAcima);
-	uart->enviarSinalDeReferencia( temperaturaReferencia );
-
-	referenciaReflow.carregarValores();
-
-	while(executar) {
-
-		uart->lerComandosDoUsuario();
-
-		switch( uart->get_codigoRetorno() ) {
-			case 1:
-				uart->enviarDisplayEstadoSistema( 0x01 );
-				sistemaLigado = true;
-				break;
-			case 2: 
-				uart->enviarDisplayEstadoSistema( 0x00 );
-				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
-				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
-				lcd->mostrarMensagem();
-				sistemaLigado = false;
-				break;
-			case 3:
-				uart->enviarDisplayControle( 0x00 );
-				std::strcpy( sistemaTelaAcima, telaModoUart );
-				lcd->set_mensagemAcima16(sistemaTelaAcima);
-				modoUART = true;
-				break;
-			case 4:
-				uart->enviarDisplayControle( 0x01 );
-				std::strcpy( sistemaTelaAcima, telaModoTerminal );
-				lcd->set_mensagemAcima16(sistemaTelaAcima);
-				tempoReflow = 0;
-				iteradorReflow = 0;
-				modoUART = false;
-				cronometroReflow = std::chrono::system_clock::now();
-			default: break;	
-		}
-
-		if( sistemaLigado ) {
-
-			uart->solicitarTemperaturaInterna();
-
-			if (modoUART) 
-				uart->solicitarTemperaturaPotenciometro();
-			else {
-				
-				voltaCronometro = std::chrono::system_clock::now();
-				tempoPassado = voltaCronometro - cronometroReflow;
-
-				if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow) ) {
-					// std::cout << "Mudando temperatura!" << '\n';
-					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
-					iteradorReflow++;
-					uart->enviarSinalDeReferencia(temperaturaReferencia);
-					uart->set_temperaturaReferencia(temperaturaReferencia);
-				}				
-
+			if( inputSimOuNao == 's') {
+				raspberryEmbarcados->configurarParametrosPID();
+			}else {
+				raspberryEmbarcados->configurarParametrosViaHostname(argv[1]);
 			}
 
-			pid_atualiza_referencia( uart->get_temperaturaReferencia() );
-			sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );
-
-			uart->enviarSinalDeControle( sinalControle );
-
-			controleDaTemperatura.mudarTemperatura(sinalControle);
-
-			std::sprintf( sistemaTelaAbaixo, "%.1f %.1f %.1f", 
-				uart->get_temperaturaInterna(),
-				uart->get_temperaturaReferencia(), 
-				(float)tempAmbiente->get_temperatura()
-			);
-
-			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-			lcd->mostrarMensagem();
+			raspberryEmbarcados->executarSistema(temperaturaReferenciaMenu);
+			break;
 		
-			comecaCronometro = std::chrono::system_clock::now();
-			comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
+		case 2:
+			std::cout << "Deseja inserir os parametros do PID manualmente?(s/n) ";
+			std::cin >> inputSimOuNao;
 
-			std::time(&comeca_tempo);
-			timeinfo = std::localtime(&comeca_tempo);
+			if( inputSimOuNao == 's') {
+				raspberryEmbarcados->configurarParametrosPID();
+			}else {
+				raspberryEmbarcados->configurarParametrosViaHostname(argv[1]);
+			}
 
-    		std::strftime( tempoString, 18, "%d/%m/%y %T", timeinfo );
+			raspberryEmbarcados->executarSistema();
+			break;
 
-			std::printf("%s -> Temp.Interna: %.2f deg C Temp.Externa: %.2f deg C Temp.Rerencia: %.2f deg C Resistor: %3d%% Ventoinha: %3d%% \n", 
-				tempoString,
-				uart->get_temperaturaInterna(),
-				tempAmbiente->get_temperaturaEmFloat(),
-				uart->get_temperaturaReferencia(),
-				controleDaTemperatura.get_valorResistor(),
-				controleDaTemperatura.get_valorVentoinha()
-			);
-
-			registro.set_dataHora(tempoString);
-			registro.set_tempInterna(uart->get_temperaturaInterna());
-			registro.set_tempExterna(tempAmbiente->get_temperaturaEmFloat());
-			registro.set_tempReferencia(uart->get_temperaturaReferencia());
-			registro.set_valorPotenciometro(sinalControle);
-			registro.registrarInformacoes();
-
-		}
+		default:
+			break;
 	}
 
-	uart->enviarSinalDeControle( 0 );
 
-	delete(lcd);
-	delete(tempAmbiente);
-	delete(uart);
+	delete(raspberryEmbarcados);
+
+	std::cout << "Obrigado por usar o sistema! " << '\n';
 
 	return EXIT_SUCCESS;
 }

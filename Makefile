@@ -27,7 +27,7 @@ obj/bme280.o: src/bme280.c
 	@ echo ' '
 
 run: bin/prog
-	bin/prog
+	bin/prog $$(hostname)
 .PHONY: clean
 clean:
 	rm -rf obj/*

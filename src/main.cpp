@@ -37,6 +37,8 @@ int main() {
 	float temperaturaReferencia{28.00f};
 	bool modoUART = true;
 
+	float valorTemperaturaAmbiente{(float)tempAmbiente->get_temperatura()};
+
 	int sinalControle{0};
 	bool sistemaLigado{false};
 	signal(SIGINT, tratarSinal);
@@ -113,7 +115,7 @@ int main() {
 			std::sprintf( sistemaTelaAbaixo, "%.1f %.1f %.1f", 
 				uart->get_temperaturaInterna(),
 				uart->get_temperaturaReferencia(), 
-				(float)tempAmbiente->get_temperatura()
+				valorTemperaturaAmbiente
 			);
 
 			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);

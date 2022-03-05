@@ -103,7 +103,7 @@ int8_t TemperatureStatus::set_temperature( struct bme280_dev *dev) {
     }
 
     /* Wait for the measurement to complete and print data */
-    // dev->delay_us(req_delay, dev->intf_ptr);
+    dev->delay_us(req_delay, dev->intf_ptr);
     rslt = bme280_get_sensor_data(BME280_ALL, &comp_data, dev);
     if (rslt != BME280_OK)
     {

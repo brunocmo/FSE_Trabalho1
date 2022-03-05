@@ -90,8 +90,7 @@ int main() {
 				(float)tempAmbiente->get_temperatura()
 			);
 
-			lcd->set_mensagemAcima16(sistemaTelaAbaixo);
-
+			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
 			lcd->mostrarMensagem();
 
 			// lcd->set_mensagemAcima16( sistemaTelaAcima);
@@ -100,46 +99,46 @@ int main() {
 		}
 	}
 
-	uart->solicitarTemperaturaInterna();
-	uart->solicitarTemperaturaPotenciometro();
+	// uart->solicitarTemperaturaInterna();
+	// uart->solicitarTemperaturaPotenciometro();
 
-	printf("A temperatura ambiente   eh: %.4lf\n", tempAmbiente->get_temperatura());
-	printf("A temperatura referencia eh: %.4lf\n", uart->get_temperaturaReferencia());
-	printf("A temperatura interna    eh: %.4lf\n", uart->get_temperaturaInterna());
+	// printf("A temperatura ambiente   eh: %.4lf\n", tempAmbiente->get_temperatura());
+	// printf("A temperatura referencia eh: %.4lf\n", uart->get_temperaturaReferencia());
+	// printf("A temperatura interna    eh: %.4lf\n", uart->get_temperaturaInterna());
 
-	lcd->set_mensagemAcima16(temperaturaAmbiente);
-	lcd->typeFloat( (float)(tempAmbiente->get_temperatura()) );
+	// lcd->set_mensagemAcima16(temperaturaAmbiente);
+	// lcd->typeFloat( (float)(tempAmbiente->get_temperatura()) );
 
-	lcd->mostrarMensagem();
+	// lcd->mostrarMensagem();
 
-	sleep(3); 
+	// sleep(3); 
 
-	lcd->set_mensagemAcima16(tempReferencia);
-	lcd->typeFloat( uart->get_temperaturaReferencia() );
+	// lcd->set_mensagemAcima16(tempReferencia);
+	// lcd->typeFloat( uart->get_temperaturaReferencia() );
 
-	lcd->mostrarMensagem();
+	// lcd->mostrarMensagem();
 
-	sleep(3); 
+	// sleep(3); 
 
-	strcpy( tempInterna, "TI             ");
-	strcpy( tempReferencia, "TE  xD         ");
+	// strcpy( tempInterna, "TI             ");
+	// strcpy( tempReferencia, "TE  xD         ");
 
-	lcd->set_mensagemAcima16(tempInterna);
-	lcd->set_mensagemAbaixo16( tempReferencia );
+	// lcd->set_mensagemAcima16(tempInterna);
+	// lcd->set_mensagemAbaixo16( tempReferencia );
 
-	lcd->mostrarMensagem();
+	// lcd->mostrarMensagem();
 
-	sleep(3);
+	// sleep(3);
 
-	std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	std::sprintf( sistemaTelaAbaixo, "TI%.2f        ", uart->get_temperaturaInterna());
+	// std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	// std::sprintf( sistemaTelaAbaixo, "TI%.2f        ", uart->get_temperaturaInterna());
 
-	printf("===> %s\n", sistemaTelaAcima);
-	printf("===> %s\n", sistemaTelaAbaixo);
+	// printf("===> %s\n", sistemaTelaAcima);
+	// printf("===> %s\n", sistemaTelaAbaixo);
 
-	lcd->set_mensagemAcima16(sistemaTelaAcima);
-	lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-	lcd->mostrarMensagem();
+	// lcd->set_mensagemAcima16(sistemaTelaAcima);
+	// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
+	// lcd->mostrarMensagem();
 
 
 	// teste->enviarDisplayEstadoSistema( 0x00 );

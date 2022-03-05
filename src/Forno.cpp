@@ -194,6 +194,8 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
 				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
 				lcd->mostrarMensagem();
+                controleDaTemperatura->mudarTemperatura(0);
+                uart->enviarSinalDeControle( 0 );
 				sistemaLigado = false;
 				break;
 			default: break;	

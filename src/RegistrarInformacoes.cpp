@@ -15,7 +15,7 @@ RegistrarInformacoes::RegistrarInformacoes() {
         arquivo << "Temperatura Interna" << ", ";
         arquivo << "Temperatura Externa" << ", ";
         arquivo << "Temperatura Referencia" << ", ";
-        arquivo << "Valor Potenciômetro" << ", " << '\n';
+        arquivo << "Valor Potenciômetro" << '\n';
         arquivo.close();
     } else std::cout << "Impossibilitado de abrir o arquivo!" << '\n';
 
@@ -33,7 +33,7 @@ void RegistrarInformacoes::registrarInformacoes() {
         arquivo << get_tempInterna() << ", ";
         arquivo << get_tempExterna() << ", ";
         arquivo << get_tempReferencia() << ", ";
-        arquivo << get_valorPotenciometro() << ", " << '\n';
+        arquivo << get_valorPotenciometro() << '\n';
         arquivo.close();
     } else std::cout << "Impossibilitado de abrir o arquivo!" << '\n';
 

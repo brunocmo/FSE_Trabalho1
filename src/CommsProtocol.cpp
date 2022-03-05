@@ -284,9 +284,23 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
                     }
 
                 } else {
+
                     std::memcpy(&valorInteiro, &rx_buffer[3], sizeof(int));
 
-                    printf("Mensagem de comprimento %d: %d\n", rx_length, valorInteiro);
+                    if( flag == 0xD3 ) {
+                        if( valorInteiro == 0 ) {
+                            printf("Ligando o forno!\n");
+                        } else {
+                            printf("Desligando o forno!\n");
+                        }
+                    } else {
+                        if( valorInteiro == 0 ) {
+                            printf("Alternado para modo de controle via potenciômetro!\n");
+                        } else {
+                            printf("Alternado para modo de controle via curva de temperatura!\n");
+                        }
+                    }
+
                 }
 
             } else {

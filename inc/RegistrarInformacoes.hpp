@@ -17,9 +17,6 @@ private:
     int valorPotenciometro;
 
 public:
-
-
-
     RegistrarInformacoes();
     ~RegistrarInformacoes();
 

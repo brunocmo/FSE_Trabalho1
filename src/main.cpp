@@ -14,6 +14,7 @@ bool executar{true};
 
 void tratarSinal(int s){
 	printf("\nFechando o programa... \n");
+	sleep(1);
 	executar = false;
 }
 
@@ -112,7 +113,7 @@ int main() {
 				tempoPassado = voltaCronometro - cronometroReflow;
 
 				if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow) ) {
-					std::cout << "Mudando temperatura!" << '\n';
+					// std::cout << "Mudando temperatura!" << '\n';
 					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
 					iteradorReflow++;
 					uart->enviarSinalDeReferencia(temperaturaReferencia);

@@ -109,16 +109,19 @@ bool Forno::executarSistema() {
                         // std::cout << "Mudando temperatura!" << '\n';
                         iteradorReflow++;
 
-                    }	
-                }		
-                
-                temperaturaReferencia = interpolarReferencia( 
+                    }
+
+                    temperaturaReferencia = interpolarReferencia( 
                     referenciaReflow.tempo.at(iteradorReflow),
                     referenciaReflow.tempo.at(iteradorReflow+1),
                     (int)tempoPassado.count(),
                     referenciaReflow.temperatura.at(iteradorReflow),
                     referenciaReflow.temperatura.at(iteradorReflow+1)
-                );
+                    );
+                    
+                    printf("Valor temperatura referencia: %.2l\n", temperaturaReferencia);
+                }		
+                
 
                 uart->enviarSinalDeReferencia(temperaturaReferencia);
                 uart->set_temperaturaReferencia(temperaturaReferencia);

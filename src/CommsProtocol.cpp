@@ -226,8 +226,6 @@ bool CommsProtocol::enviarInformacao(int numeroCaracteres) {
         printf("Erro no envio de dados - TX\n");
     }
 
-    sleep(1);
-
     if( palavraDeEnvio[2] == 0xD1 || palavraDeEnvio[2] == 0xD2 ) 
         return EXIT_SUCCESS;
     else receberInformacao(palavraDeEnvio[2]);
@@ -247,6 +245,8 @@ bool CommsProtocol::receberInformacao(unsigned char flag) {
     unsigned char rx_buffer[100];
 
     if(get_uart0_filestream() != -1) {
+
+        sleep(1);
 
         rx_length = read(get_uart0_filestream(), (void*)rx_buffer, 100);
         if(rx_length < 0){

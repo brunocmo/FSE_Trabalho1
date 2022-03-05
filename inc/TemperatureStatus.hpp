@@ -54,6 +54,8 @@ public:
     double get_temperatura();
     int8_t set_temperature( struct bme280_dev *dev);
 
+    float get_temperaturaEmFloat();
+
 };
 
 

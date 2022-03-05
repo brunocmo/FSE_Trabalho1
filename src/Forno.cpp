@@ -110,12 +110,6 @@ bool Forno::executarSistema() {
 
 
                 if( ((int)referenciaReflow.tempo.size()) > (iteradorReflow+1)) {
-                    if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow+1) ) {
-                        // std::cout << "Mudando temperatura!" << '\n';
-                        iteradorReflow++;
-
-                    }
-
                     temperaturaReferencia = interpolarReferencia( 
                     referenciaReflow.tempo.at(iteradorReflow),
                     referenciaReflow.tempo.at(iteradorReflow+1),
@@ -123,6 +117,12 @@ bool Forno::executarSistema() {
                     referenciaReflow.temperatura.at(iteradorReflow),
                     referenciaReflow.temperatura.at(iteradorReflow+1)
                     );
+
+                    if( ((int)tempoPassado.count()) >= referenciaReflow.tempo.at(iteradorReflow+1) ) {
+                        // std::cout << "Mudando temperatura!" << '\n';
+                        iteradorReflow++;
+
+                    }
 
                     // printf("Valor temperatura referencia: %.2f\n", temperaturaReferencia);
                 }		

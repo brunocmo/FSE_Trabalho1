@@ -98,9 +98,7 @@ int main() {
 					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
 					iteradorReflow++;
 				}				
-
-				std::cout << "tempo: " << tempoReflow << " iterador: " << iteradorReflow << '\n';
-
+				uart->enviarSinalDeReferencia(temperaturaReferencia);
 				uart->set_temperaturaReferencia(temperaturaReferencia);
 			}
 

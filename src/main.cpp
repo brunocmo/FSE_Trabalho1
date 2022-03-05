@@ -137,7 +137,7 @@ int main() {
 			comecaCronometro = std::chrono::system_clock::now();
 			comeca_tempo = std::chrono::system_clock::to_time_t(comecaCronometro);
 
-			printf("%s Temp.Interna: %.2f Temp.Externa: %.2f Temp.Rerencia: %.2f Resistor: %d\% Ventoinha: %d\% \n", 
+			printf("%s Temp.Interna: %.2f Temp.Externa: %.2f Temp.Rerencia: %.2f Resistor: %d%% Ventoinha: %d%% \n", 
 				std::ctime(&comeca_tempo),
 				uart->get_temperaturaInterna(),
 				tempAmbiente->get_temperaturaEmFloat(),

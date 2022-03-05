@@ -118,8 +118,8 @@ bool Forno::executarSistema() {
                     referenciaReflow.temperatura.at(iteradorReflow),
                     referenciaReflow.temperatura.at(iteradorReflow+1)
                     );
-                    
-                    printf("Valor temperatura referencia: %.2l\n", temperaturaReferencia);
+
+                    printf("Valor temperatura referencia: %.2f\n", temperaturaReferencia);
                 }		
                 
 

@@ -1,5 +1,3 @@
-
-
 #ifndef FORNO_HPP
 #define FORNO_HPP
 
@@ -15,13 +13,9 @@
 #include "CurvaReflow.hpp"
 #include "RegistrarInformacoes.hpp"
 
-bool executar{true};
+extern bool executar;
 
-void tratarSinal(int s){
-	printf("\nFechando o programa... \n");
-	sleep(1);
-	executar = false;
-}
+void tratarSinal(int s);
 
 class Forno {
 
@@ -89,6 +83,5 @@ public:
     void set_pid_Kd( double pid_Kd );
 
 };
-
 
 #endif

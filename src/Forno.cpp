@@ -1,5 +1,13 @@
 #include "../inc/Forno.hpp"
 
+bool executar = 0;
+
+void tratarSinal(int s){
+	printf("\nFechando o programa... \n");
+	sleep(1);
+	executar = false;
+}
+
 Forno::Forno() {
 
     iteradorReflow = 0;
@@ -261,7 +269,7 @@ void Forno::configurarParametrosPID() {
 }
 
 void Forno::configurarParametrosViaHostname( char * hostname ) {
-    if ( hostname == "rasp42") {
+    if ( !(std::strcmp(hostname, "rasp42")) ) {
         std::cout << "Placa Rasp42 (12V) detectado, inserindo configurações padrões do PID" << '\n';
         set_pid_Kp( 30.0 );
         set_pid_Ki( 0.2 );

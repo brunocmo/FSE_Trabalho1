@@ -12,8 +12,6 @@ int main(int argc, char * argv[]) {
 	float temperaturaReferenciaMenu{0.0f};
 	char inputSimOuNao{'n'};
 
-	Forno * raspberryEmbarcados = new Forno();
-
 	std::cout << "======== Sistema de Forno para soldagem de placas ========" << '\n';
 	std::cout << "Selecione uma opcao: " << '\n';
 	std::cout << "1. Modo Terminal " << '\n';
@@ -23,6 +21,8 @@ int main(int argc, char * argv[]) {
 	std::cin >> selecaoMenu;
 
 	system("clear");
+
+	Forno * raspberryEmbarcados = new Forno();
 
 	switch (selecaoMenu)
 	{

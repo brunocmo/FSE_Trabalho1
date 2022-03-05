@@ -1,6 +1,6 @@
 #include "../inc/Forno.hpp"
 
-bool executar = 0;
+bool executar = true;
 
 void tratarSinal(int s){
 	printf("\nFechando o programa... \n");

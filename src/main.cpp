@@ -15,7 +15,7 @@ void tratarSinal(int s){
 
 int main() {
 
-	// ControleTemperatura controleDaTemperatura;
+	ControleTemperatura controleDaTemperatura;
 	ShowInfoLCD * lcd = new ShowInfoLCD();
 	TemperatureStatus * tempAmbiente = new TemperatureStatus();
 	CommsProtocol * uart = new CommsProtocol();
@@ -82,7 +82,7 @@ int main() {
 
 			uart->enviarSinalDeControle( sinalControle );
 
-			// controleDaTemperatura.mudarTemperatura(sinalControle);
+			controleDaTemperatura.mudarTemperatura(sinalControle);
 
 			std::sprintf( sistemaTelaAbaixo, "%.1f %.1f %.1f", 
 				uart->get_temperaturaInterna(),
@@ -93,86 +93,8 @@ int main() {
 			lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
 			lcd->mostrarMensagem();
 
-			// lcd->set_mensagemAcima16( sistemaTelaAcima);
-			// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-			// lcd->mostrarMensagem();
 		}
 	}
-
-	// uart->solicitarTemperaturaInterna();
-	// uart->solicitarTemperaturaPotenciometro();
-
-	// printf("A temperatura ambiente   eh: %.4lf\n", tempAmbiente->get_temperatura());
-	// printf("A temperatura referencia eh: %.4lf\n", uart->get_temperaturaReferencia());
-	// printf("A temperatura interna    eh: %.4lf\n", uart->get_temperaturaInterna());
-
-	// lcd->set_mensagemAcima16(temperaturaAmbiente);
-	// lcd->typeFloat( (float)(tempAmbiente->get_temperatura()) );
-
-	// lcd->mostrarMensagem();
-
-	// sleep(3); 
-
-	// lcd->set_mensagemAcima16(tempReferencia);
-	// lcd->typeFloat( uart->get_temperaturaReferencia() );
-
-	// lcd->mostrarMensagem();
-
-	// sleep(3); 
-
-	// strcpy( tempInterna, "TI             ");
-	// strcpy( tempReferencia, "TE  xD         ");
-
-	// lcd->set_mensagemAcima16(tempInterna);
-	// lcd->set_mensagemAbaixo16( tempReferencia );
-
-	// lcd->mostrarMensagem();
-
-	// sleep(3);
-
-	// std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	// std::sprintf( sistemaTelaAbaixo, "TI%.2f        ", uart->get_temperaturaInterna());
-
-	// printf("===> %s\n", sistemaTelaAcima);
-	// printf("===> %s\n", sistemaTelaAbaixo);
-
-	// lcd->set_mensagemAcima16(sistemaTelaAcima);
-	// lcd->set_mensagemAbaixo16(sistemaTelaAbaixo);
-	// lcd->mostrarMensagem();
-
-
-	// teste->enviarDisplayEstadoSistema( 0x00 );
-	// teste->enviarDisplayControle( 0x00 );
-
-	// teste->lerComandosDoUsuario();
-
-	// printf(" O comando foi  %d\n", teste->get_codigoRetorno());
-
-	// teste->enviarSinalDeControle( 69 );
-	// teste->enviarSinalDeReferencia( 50.0f );
-
-	// printf("\n==================\nControle de temperatura interna teste \n");
-
-
-
-	// printf("Adicionar temperatura\n");
-	// umTeste.mudarTemperatura( 100 );
-	// delay(30000);
-	// printf("Reduzir temperatura\n");
-	// umTeste.mudarTemperatura( -100 );
-	// delay(30000);
-	
-	// sleep(2);
-
-	// if ( teste->solicitarTemperaturaPotenciometro() ) {
-	//   return EXIT_FAILURE;
-	// }
-
-	// sleep(2);
-
-	// if ( teste->lerComandosDoUsuario() ) {
-	//   return EXIT_FAILURE;
-	// }
 
 	delete(lcd);
 	delete(tempAmbiente);

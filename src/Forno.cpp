@@ -109,7 +109,7 @@ bool Forno::executarSistema() {
                 printf("2 - %d\n", referenciaReflow.tempo.at(1));
 
 
-                if( ((int)referenciaReflow.tempo.size()) > (iteradorReflow+1)) {
+                if(1) {
 
                     printf("to aqui");
                     temperaturaReferencia = interpolarReferencia( 

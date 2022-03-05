@@ -306,6 +306,10 @@ void Forno::configurarParametrosViaHostname( char * hostname ) {
 float Forno::interpolarReferencia( int x_anterior, int x_posterior, int x_atual, float t_anterior, float t_posterior){
     float resultado{0};
 
+    printf(" xA - %d | xP - %d | xI - %d | tA - %.2f | tP - %.2f \n", 
+        x_anterior, x_posterior, x_atual, t_anterior, t_posterior
+    );
+
     resultado = t_anterior + (((x_atual-x_anterior)/(x_posterior-x_anterior))*(t_posterior-t_anterior));
     return resultado;
 }

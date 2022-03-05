@@ -39,6 +39,7 @@ int main() {
 
 	lcd->set_mensagemAcima16( sistemaDesligadoAcima );
 	lcd->set_mensagemAbaixo16( sistemaDesligadoAbaixo );
+	lcd->mostrarMensagem();
 
 	uart->enviarSinalDeReferencia( 28.00f );
 
@@ -129,8 +130,8 @@ int main() {
 
 	sleep(3);
 
-	std::sprintf( sistemaTelaAcima, "TR %.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
-	std::sprintf( sistemaTelaAbaixo, "TI %.2f        ", uart->get_temperaturaInterna());
+	std::sprintf( sistemaTelaAcima, "TR%.2f TE%.2f", uart->get_temperaturaReferencia(), (float)tempAmbiente->get_temperatura());
+	std::sprintf( sistemaTelaAbaixo, "TI%.2f        ", uart->get_temperaturaInterna());
 
 	printf("===> %s\n", sistemaTelaAcima);
 	printf("===> %s\n", sistemaTelaAbaixo);

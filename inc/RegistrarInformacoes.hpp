@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <iomanip>
 
 class RegistrarInformacoes {
 private:

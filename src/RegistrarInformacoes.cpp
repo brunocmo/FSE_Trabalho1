@@ -29,11 +29,11 @@ void RegistrarInformacoes::registrarInformacoes() {
     std::ofstream arquivo ("doc/log.csv", std::ios::app );
 
     if(arquivo.is_open()) {
-        arquivo << get_dataHora() << ", ";
-        arquivo << get_tempInterna() << ", ";
-        arquivo << get_tempExterna() << ", ";
-        arquivo << get_tempReferencia() << ", ";
-        arquivo << get_valorPotenciometro() << '\n';
+        arquivo << get_dataHora() << ",";
+        arquivo << std::fixed << std::setprecision(1) << get_tempInterna() << ",";
+        arquivo << std::fixed << std::setprecision(1) << get_tempExterna() << ",";
+        arquivo << std::fixed << std::setprecision(1) << get_tempReferencia() << ",";
+        arquivo << std::fixed << std::setprecision(1) << get_valorPotenciometro() << '\n';
         arquivo.close();
     } else std::cout << "Impossibilitado de abrir o arquivo!" << '\n';
 

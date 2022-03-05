@@ -173,6 +173,7 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 	
 	lcd->set_mensagemAcima16(sistemaTelaAcima);
 	uart->enviarSinalDeReferencia( temperaturaReferenciaMenu );
+    pid_atualiza_referencia( temperaturaReferenciaMenu );
 
 	referenciaReflow.carregarValores();
 
@@ -199,7 +200,6 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 
 			uart->solicitarTemperaturaInterna();
 
-			pid_atualiza_referencia( uart->get_temperaturaReferencia() );
 			sinalControle = (int)pid_controle( uart->get_temperaturaInterna() );
 
 			uart->enviarSinalDeControle( sinalControle );
@@ -208,7 +208,7 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 
 			std::sprintf( sistemaTelaAbaixo, "%.1f %.1f %.1f", 
 				uart->get_temperaturaInterna(),
-				uart->get_temperaturaReferencia(), 
+				temperaturaReferenciaMenu, 
 				(float)tempAmbiente->get_temperatura()
 			);
 
@@ -227,7 +227,7 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 				tempoString,
 				uart->get_temperaturaInterna(),
 				tempAmbiente->get_temperaturaEmFloat(),
-				uart->get_temperaturaReferencia(),
+				temperaturaReferenciaMenu,
 				controleDaTemperatura->get_valorResistor(),
 				controleDaTemperatura->get_valorVentoinha()
 			);
@@ -235,7 +235,7 @@ bool Forno::executarSistema( float temperaturaReferenciaMenu ) {
 			registro.set_dataHora(tempoString);
 			registro.set_tempInterna(uart->get_temperaturaInterna());
 			registro.set_tempExterna(tempAmbiente->get_temperaturaEmFloat());
-			registro.set_tempReferencia(uart->get_temperaturaReferencia());
+			registro.set_tempReferencia(temperaturaReferenciaMenu);
 			registro.set_valorPotenciometro(sinalControle);
 			registro.registrarInformacoes();
 

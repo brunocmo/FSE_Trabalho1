@@ -59,14 +59,26 @@ int main() {
 	while(executar) {
 
 		uart->lerComandosDoUsuario();
+		uart->solicitarTemperaturaInterna();
+		uart->solicitarTemperaturaPotenciometro();
+
+		sleep(1);
+
+		uart->receberInformacao( 0xC3 );
+		uart->receberInformacao( 0xC1 );
+		uart->receberInformacao( 0xC2 );
 
 		switch( uart->get_codigoRetorno() ) {
 			case 1:
 				uart->enviarDisplayEstadoSistema( 0x01 );
+				sleep(1);
+				uart->receberInformacao( 0xD3 );
 				sistemaLigado = true;
 				break;
 			case 2: 
 				uart->enviarDisplayEstadoSistema( 0x00 );
+				sleep(1);
+				uart->receberInformacao( 0xD3 );
 				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
 				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
 				lcd->mostrarMensagem();
@@ -74,12 +86,16 @@ int main() {
 				break;
 			case 3:
 				uart->enviarDisplayControle( 0x00 );
+				sleep(1);
+				uart->receberInformacao( 0xD4 );
 				std::strcpy( sistemaTelaAcima, telaModoUart );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
 				modoUART = true;
 				break;
 			case 4:
 				uart->enviarDisplayControle( 0x01 );
+				sleep(1);
+				uart->receberInformacao( 0xD4 );
 				std::strcpy( sistemaTelaAcima, telaModoTerminal );
 				lcd->set_mensagemAcima16(sistemaTelaAcima);
 				tempoReflow = 0;
@@ -90,19 +106,19 @@ int main() {
 
 		if( sistemaLigado ) {
 
-			uart->solicitarTemperaturaInterna();
-
-			if (modoUART) 
-				uart->solicitarTemperaturaPotenciometro();
-			else {
-				
+			// uart->solicitarTemperaturaInterna();
+			if (!modoUART) {
+			
 				if( tempoReflow == referenciaReflow.tempo.at(iteradorReflow) ) {
 					std::cout << "Mudando temperatura!" << '\n';
 					temperaturaReferencia = referenciaReflow.temperatura.at(iteradorReflow);
+					uart->enviarSinalDeReferencia(temperaturaReferencia);
+
 					iteradorReflow++;
 				}				
-				uart->enviarSinalDeReferencia(temperaturaReferencia);
+
 				uart->set_temperaturaReferencia(temperaturaReferencia);
+				
 			}
 
 			pid_atualiza_referencia( uart->get_temperaturaReferencia() );

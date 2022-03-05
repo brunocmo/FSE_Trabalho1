@@ -71,7 +71,10 @@ bool Forno::executarSistema() {
 				lcd->set_mensagemAcima16(sistemaDesligadoAcima);
 				lcd->set_mensagemAbaixo16(sistemaDesligadoAbaixo);
 				lcd->mostrarMensagem();
+                controleDaTemperatura->mudarTemperatura(0);
+                uart->enviarSinalDeControle( 0 );
 				sistemaLigado = false;
+
 				break;
 			case 3:
 				uart->enviarDisplayControle( MODO_UART );

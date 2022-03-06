@@ -37,9 +37,9 @@ Para limpar os arquivos .o e prog(executável):
 
 Ao iniciar o programa é possível ver três opções:
 
-* A primeira você vai no modo terminal onde coloca o valor da temperatura desejada e depois escolhe se deseja colocar manualmente os valores para o PID, caso não queira o sistema já identifica se é a placa rasp42 ou rasp43, colocando então automaticamente os valores padrões dessas placas. Em seguida a aplicação começa podendo então ligar ou desligar o forno pela dashboard. Caso queira parar o programa basta apertar CTRL+C para desligar o sistema e terminar o programa.
+* A primeira você vai no modo terminal onde coloca o valor da temperatura desejada e depois escolhe se deseja colocar manualmente os valores para o PID, caso não queira o sistema já identifica se é a placa rasp42 ou rasp43, colocando então automaticamente os valores padrões dessas placas. Em seguida a aplicação começa, podendo então ligar ou desligar o forno pela dashboard. Caso queira parar o programa basta apertar CTRL+C para desligar o sistema e terminar o programa.
 
-* A segunda você pode escolher ou não colocar os valores do PID como no passo anterior ou pegar de forma automatica. Depois disso o controle é totalmente na dashboard disponibilizada. Onde pode ter a função de ligar, desligar, mudar o modo para potenciômetro ou modo curva reFlow. Caso queira parar o programa basta apertar CTRL+C para desligar o sistema e terminar o programa.
+* A segunda você pode escolher ou não colocar os valores do PID como no passo anterior ou pegar de forma automática. Depois disso o controle é totalmente na dashboard disponibilizada. Onde pode ter a função de ligar, desligar, mudar o modo para potenciômetro ou modo curva reFlow. Caso queira parar o programa basta apertar CTRL+C para desligar o sistema e terminar o programa.
 
 * A terceira opção termina do programa.
 

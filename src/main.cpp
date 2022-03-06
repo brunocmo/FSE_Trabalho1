@@ -22,6 +22,8 @@ int main(int argc, char * argv[]) {
 
 	std::cin >> selecaoMenu;
 
+	if( selecaoMenu == 0 ) return 0;
+
 	system("clear");
 
 	Forno * raspberryEmbarcados = new Forno();

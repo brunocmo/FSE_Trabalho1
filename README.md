@@ -13,7 +13,7 @@ Trabalho 1 da disciplina de Fundamentos de Sistemas Embarcados (2021/2)
 
 ## Requisitos
 
-É necessario o *git*, *make*, e *gpp* instalados.
+É necessário o *git*, *make*, e *gpp* instalados.
 
 Tem o uso das bibliotecas instalados na Raspberry Pi: *wiringPi.h*, *wiringPiI2C.h* e *softPwm.h*.
 
@@ -41,7 +41,7 @@ Ao iniciar o programa é possível ver três opções:
 
 * A segunda você pode escolher ou não colocar os valores do PID como no passo anterior ou pegar de forma automática. Depois disso o controle é totalmente na dashboard disponibilizada. Onde pode ter a função de ligar, desligar, mudar o modo para potenciômetro ou modo curva reFlow. Caso queira parar o programa basta apertar CTRL+C para desligar o sistema e terminar o programa.
 
-* A terceira opção termina do programa.
+* A terceira opção termina o programa.
 
 Toda vez que é iniciado o programa e o forno é ligado, são registrados os valores de data/hora, temperaturas e sinais, dentro do arquivo em *doc/log.csv* .
 
